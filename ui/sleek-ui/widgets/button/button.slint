@@ -1,0 +1,97 @@
+import { UButtonType, UButtonTheme, UButtonThemes } from "theme.slint";
+import { UAppTheme } from "../../app-theme.slint";
+import { ButtonInterface } from "../../utils/button-interface.slint";
+import { UIcon } from "../icon/icon.slint";
+
+
+export enum IconPlacement {
+	hidden,
+	start,
+	end,
+}
+
+export component UButton inherits ButtonInterface {
+    in-out property <UButtonType> type: UButtonType.default;
+    property <UButtonTheme> theme: UButtonThemes.get-theme(type, danger);
+    in-out property <string> text <=> text-obj.text;
+    in property <bool> danger: false;
+    in property <image> icon;
+    in property <IconPlacement> icon-placement: IconPlacement.hidden;
+    background: theme.background;
+    border-radius: theme.border-radius;
+    border-width: self.has-focus ? 2px : theme.border-width;
+    border-color: self.has-focus ? black : theme.border;
+    HorizontalLayout {
+        spacing: 4px;
+        padding-top: theme.padding-vertical;
+        padding-bottom: theme.padding-vertical;
+        padding-left: theme.padding-horizontal;
+        padding-right: theme.padding-horizontal;
+        if icon-placement == IconPlacement.start: VerticalLayout {
+            alignment: center;
+            UIcon {
+                source: root.icon;
+                colorize: root.theme.text-color;
+                states [
+                    disabled when !root.enabled: {
+                        colorize: root.theme.text-color-disabled;
+                    }
+                    active when root.pressed: {
+                        colorize: root.theme.text-color-active;
+                    }
+                    hover when root.has-hover: {
+                        colorize: root.theme.text-color-hover;
+                    }
+                ]
+            }
+        }
+        VerticalLayout {
+            alignment: center;
+            text-obj := Text {
+                color: theme.text-color;
+                font-size: theme.font-size;
+                animate color {
+                    easing: ease;
+                    duration: 250ms;
+                }
+            }
+        }
+
+        if icon-placement == IconPlacement.end: VerticalLayout {
+            alignment: center;
+            start-icon := UIcon {
+                source: root.icon;
+                colorize: root.theme.text-color;
+                states [
+                    disabled when !root.enabled: {
+                        colorize: root.theme.text-color-disabled;
+                    }
+                    active when root.pressed: {
+                        colorize: root.theme.text-color-active;
+                    }
+                    hover when root.has-hover: {
+                        colorize: root.theme.text-color-hover;
+                    }
+                ]
+            }
+        }
+    }
+
+    states [
+        disabled when !self.enabled: {
+            background: theme.background-disabled;
+            border-color: self.has-focus ? black : theme.border-disabled;
+            text-obj.color: theme.text-color-disabled;
+        }
+        active when self.pressed: {
+            background: theme.background-active;
+            border-color: self.has-focus ? black : theme.border-active;
+            text-obj.color: theme.text-color-active;
+        }
+        hover when self.has-hover: {
+            background: theme.background-hover;
+            border-color: self.has-focus ? black : theme.border-hover;
+            text-obj.color: theme.text-color-hover;
+        }
+    ]
+}

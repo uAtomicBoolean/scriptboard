@@ -1,0 +1,35 @@
+// A simple component used to implement a button like comportment.
+// This is used to manage clicking with the left mouse button, with 
+// the space and return keys and to manage focus.
+export component ButtonInterface inherits Rectangle {
+    in-out property <bool> enabled <=> touch.enabled;
+    out property <bool> has-focus <=> focus.has-focus;
+    out property <bool> has-hover <=> touch.has-hover;
+    out property <bool> pressed <=> touch.pressed;
+    callback clicked();
+    animate background, border-color {
+        easing: ease;
+        duration: 250ms;
+    }
+    focus := FocusScope {
+        enabled: root.enabled;
+        key-pressed(event) => {
+            if event.text == Key.Space || event.text == Key.Return {
+                root.clicked();
+                accept
+            }
+            if event.text == Key.Escape {
+                self.clear-focus();
+            }
+            reject
+        }
+    }
+
+    touch := TouchArea {
+        clicked => {
+            focus.focus();
+            focus.clear-focus();
+            root.clicked();
+        }
+    }
+}

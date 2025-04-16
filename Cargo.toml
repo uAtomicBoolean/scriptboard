@@ -1,0 +1,49 @@
+[package]
+name = "scriptboard"
+version = "0.1.0"
+edition = "2024"
+
+[package.metadata.winresource]
+FileDescription = "scriptboard"
+FileVersion = "0.0.1-alpha"
+ProductName = "scriptboard"
+Comments = "A simple desktop software to execute saved script files."
+OriginalFilename = "scriptboard.exe"
+InternalName = "scriptboard.exe"
+LegalCopyright = "Copyright uAtomicBoolean © 2025"
+
+[dependencies]
+slint = { version = "^1.10.0", features = [
+	"raw-window-handle-06",
+	"renderer-skia",
+] }
+i-slint-backend-winit = "=1.10.0"
+dirs = "6.0.0"
+rfd = "0.15.3"
+serde_json = "1.0.140"
+serde = "1.0.219"
+
+[build-dependencies]
+slint-build = "^1.10.0"
+
+[target.'cfg(windows)'.build-dependencies]
+winresource = "0.1.19"
+
+[profile.dev]
+incremental = true
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true
+
+[package.metadata.packager]
+before-packaging-command = "cargo build --release"
+product-name = "scriptboard"
+identifier = "com.slint.template"
+resources = ["Cargo.toml", "src", "res/32x32.png", "res/icon.ico"]
+icons = ["res/32x32.png", "res/icon.ico"]
+binaries_dir = "target/release"
+out_dir = "dist/"

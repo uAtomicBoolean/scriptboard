@@ -1,0 +1,32 @@
+import { UText } from "../text/text.slint";
+import { ButtonInterface } from "../../utils/button-interface.slint";
+import { UAppTheme } from "../../app-theme.slint";
+
+
+export component ULink inherits ButtonInterface {
+    in-out property <string> text <=> link-text.text;
+
+    VerticalLayout {
+        alignment: center;
+        spacing: -1px;
+        link-text := UText {
+            color: UAppTheme.primary;
+            font-size: UAppTheme.default-font-size;
+        }
+
+        underline := Rectangle {
+            height: 2px;
+            background: UAppTheme.primary;
+        }
+    }
+
+    states [
+        focus when root.has-focus: {
+            border-width: 2px;
+            border-color: black;
+        }
+        hover when root.has-hover: {
+            underline.visible: false;
+        }
+    ]
+}

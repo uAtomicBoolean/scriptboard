@@ -1,0 +1,47 @@
+import { UIconButtonType, UIconButtonTheme, UIconButtonThemes } from "theme.slint";
+import { UAppTheme } from "../../app-theme.slint";
+import { ButtonInterface } from "../../utils/button-interface.slint";
+import { UIcon } from "../icon/icon.slint";
+
+
+
+export component UIconButton inherits ButtonInterface {
+    in-out property <UIconButtonType> type: UIconButtonType.default;
+    property <UIconButtonTheme> theme: UIconButtonThemes.get-theme(type, danger);
+    in property <bool> danger: false;
+    in property <image> icon;
+    background: theme.background;
+    border-radius: theme.border-radius;
+    border-width: self.has-focus ? 2px : theme.border-width;
+    border-color: self.has-focus ? black : theme.border;
+    HorizontalLayout {
+        spacing: 4px;
+        padding-top: theme.padding-vertical;
+        padding-bottom: theme.padding-vertical;
+        padding-left: theme.padding-horizontal;
+        padding-right: theme.padding-horizontal;
+        icon-obj := UIcon {
+            size: theme.font-size * 1.3;
+            source: root.icon;
+            colorize: root.theme.text-color;
+        }
+    }
+
+    states [
+        disabled when !self.enabled: {
+            background: theme.background-disabled;
+            border-color: self.has-focus ? black : theme.border-disabled;
+            icon-obj.colorize: root.theme.text-color-disabled;
+        }
+        active when self.pressed: {
+            background: theme.background-active;
+            border-color: self.has-focus ? black : theme.border-active;
+            icon-obj.colorize: root.theme.text-color-active;
+        }
+        hover when self.has-hover: {
+            background: theme.background-hover;
+            border-color: self.has-focus ? black : theme.border-hover;
+            icon-obj.colorize: root.theme.text-color-hover;
+        }
+    ]
+}

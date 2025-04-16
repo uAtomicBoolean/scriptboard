@@ -1,0 +1,14 @@
+import { UAppTheme } from "../../app-theme.slint";
+
+export component USpinner inherits Image {
+    colorize: UAppTheme.primary;
+    width: UAppTheme.default-icon-size;
+    height: UAppTheme.default-icon-size;
+    source: @image-url("../../assets/images/loader-circle.svg");
+    rotation-angle: 240deg * animation-tick() / 1s;
+
+    animate rotation-angle {
+        easing: ease-in-out;
+        iteration-count: -1;
+    }
+}
