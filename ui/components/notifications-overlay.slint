@@ -1,0 +1,120 @@
+import { UAppTheme } from "@sleek-ui/app-theme.slint";
+import { UNotification, UNotificationVariant } from "@sleek-ui/widgets.slint";
+
+
+export enum NotifTypeEnum {
+	info,
+	success,
+	warning,
+	danger,
+}
+
+export enum NotifStringEnum {
+	script-execution-done,
+	script-execution-failed,
+	error-open-output-window-title,
+	error-open-output-window-message,
+}
+
+export struct NotificationData {
+	variant: NotifTypeEnum,
+	title: string,
+	message: string,
+}
+
+export global NotifsOverlayLogic {
+    in-out property <[NotificationData]> notifications: [];
+    callback remove-notification(notif_index: int);
+    pure callback get-timeout-enabled() -> bool;
+    pure callback get-timeout() -> duration;
+    public pure function get-notif-variant(str: NotifTypeEnum) -> UNotificationVariant {
+        if str == NotifTypeEnum.info {
+            return UNotificationVariant.info;
+        }
+        if str == NotifTypeEnum.success {
+            return UNotificationVariant.success;
+        }
+        if str == NotifTypeEnum.warning {
+            return UNotificationVariant.warning;
+        }
+        if str == NotifTypeEnum.danger {
+            return UNotificationVariant.danger;
+        }
+        return UNotificationVariant.info;
+    }
+    public pure function get-notif-string(str: NotifStringEnum) -> string {
+        if str == NotifStringEnum.script-execution-done {
+            return @tr("Script execution done.");
+        }
+        if str == NotifStringEnum.script-execution-failed {
+            return @tr("Script execution failed.");
+        }
+        if str == NotifStringEnum.error-open-output-window-title {
+            return @tr("Could not open output window");
+        }
+        if str == NotifStringEnum.error-open-output-window-message {
+            return @tr("Please check the logs for more information.");
+        }
+        return @tr("Unknown");
+    }
+}
+
+export component NotificationsOverlay inherits Rectangle {
+    property <length> n-padding: 12px * UAppTheme.scale-factor;
+    property <length> n-spacing: 8px * UAppTheme.scale-factor;
+    property <length> notif-width: 300px * UAppTheme.scale-factor;
+    property <length> notif-height: 77px * UAppTheme.scale-factor;
+    for notif[idx] in NotifsOverlayLogic.notifications: UNotification {
+        property <bool> timout-enabled: NotifsOverlayLogic.get-timeout-enabled();
+        property <duration> timeout: NotifsOverlayLogic.get-timeout();
+        function animated-close() {
+            self.x = root.width + notif-width;
+            close-timer.running = true;
+        }
+        width: notif-width;
+        height: notif-height;
+        x: root.width - notif-width - n-padding;
+        y: notif-height * idx + n-spacing * idx + n-padding;
+        init => {
+            self.opacity = 0;
+        }
+        variant: NotifsOverlayLogic.get-notif-variant(notif.variant);
+        title: notif.title;
+        message: notif.message;
+        clicked => {
+			// Can do something when closing (ex: open script output).
+			animated-close()
+        }
+        close => {
+            animated-close()
+        }
+        animate opacity, y { duration: 150ms; }
+        animate x { duration: 250ms; }
+        open-timer := Timer {
+            interval: 150ms;
+            running: true;
+            triggered => {
+                parent.opacity = 1;
+                self.running = false;
+            }
+        }
+
+        close-timer := Timer {
+            interval: 250ms;
+            running: false;
+            triggered => {
+                self.running = false;
+                NotifsOverlayLogic.remove-notification(idx);
+            }
+        }
+
+        Timer {
+            interval: timeout;
+            running: timout-enabled;
+            triggered => {
+                self.running = false;
+                animated-close();
+            }
+        }
+    }
+}

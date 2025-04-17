@@ -1,0 +1,221 @@
+import { UAppTheme } from "@sleek-ui/app-theme.slint";
+import { UButton, UCenter, UInput, USelect, USwitch, UText, UTitle } from "@sleek-ui/widgets.slint";
+import { USelectOption } from "@sleek-ui/utils/structs.slint";
+
+import { TemplatePage } from "../components/template_page.slint";
+import { ComboBox } from "std-widgets.slint";
+
+
+export global SettingsPageLogic {
+    pure callback get-default-interpreter() -> string;
+    pure callback get-notif-timeout() -> int;
+    pure callback get-timeout-enabled() -> bool;
+    pure callback get-language-current-index(options: [USelectOption]) -> int;
+    pure callback get-scale-factor-current-index(options: [USelectOption]) -> int;
+    callback save-settings(def-inter: string, lang: string, sf: float, timeout: int, tt-enabled: bool);
+}
+
+export component SettingsPage inherits TemplatePage {
+    property <bool> settings-modified: false;
+    HorizontalLayout {
+        alignment: start;
+        UTitle {
+            text: @tr("General");
+            level: 6;
+            font-weight: 600;
+        }
+    }
+
+    HorizontalLayout {
+        VerticalLayout {
+            alignment: center;
+            UText {
+                text: @tr("Zoom");
+            }
+        }
+
+        Rectangle {
+            horizontal-stretch: 1;
+        }
+
+        scale-factor-select := USelect {
+            property <[USelectOption]> options-data: [
+                { text: SettingsTR.get-scale-factor-string(0.5), value: "0.5", enabled: true },
+                { text: SettingsTR.get-scale-factor-string(0.75), value: "0.75", enabled: true },
+                { text: SettingsTR.get-scale-factor-string(0.9), value: "0.9", enabled: true },
+                { text: SettingsTR.get-scale-factor-string(1), value: "1", enabled: true },
+                { text: SettingsTR.get-scale-factor-string(1.1), value: "1.1", enabled: true },
+                { text: SettingsTR.get-scale-factor-string(1.25), value: "1.25", enabled: true },
+                { text: SettingsTR.get-scale-factor-string(1.5), value: "1.5", enabled: true },
+                { text: SettingsTR.get-scale-factor-string(1.75), value: "1.75", enabled: true },
+                { text: SettingsTR.get-scale-factor-string(2), value: "2", enabled: true },
+            ];
+            width: 150px * UAppTheme.scale-factor;
+            current-index: SettingsPageLogic.get-scale-factor-current-index(options-data);
+            options: options-data;
+            selected-changed(value) => {
+                settings-modified = true;
+            }
+        }
+    }
+
+    HorizontalLayout {
+        VerticalLayout {
+            alignment: center;
+            UText {
+                text: @tr("Language");
+            }
+        }
+
+        Rectangle {
+            horizontal-stretch: 1;
+        }
+
+        language-select := USelect {
+            property <[USelectOption]> options-data: [
+                { text: SettingsTR.get-language-string("en"), value: "en", enabled: true },
+                { text: SettingsTR.get-language-string("fr"), value: "fr", enabled: true },
+            ];
+            width: 150px * UAppTheme.scale-factor;
+            current-index: SettingsPageLogic.get-language-current-index(options-data);
+            options: options-data;
+            selected-changed(value) => {
+                settings-modified = true;
+            }
+        }
+    }
+
+    HorizontalLayout {
+        alignment: start;
+        padding-top: UAppTheme.padding-bigger;
+        UTitle {
+            text: @tr("Scripts");
+            level: 6;
+            font-weight: 600;
+        }
+    }
+
+    HorizontalLayout {
+        spacing: UAppTheme.spacing-base;
+        VerticalLayout {
+            alignment: center;
+            UText {
+                text: @tr("Enable notification auto-close");
+            }
+        }
+
+        VerticalLayout {
+            alignment: center;
+            enable-timeout := USwitch {
+                checked: SettingsPageLogic.get-timeout-enabled();
+                changed checked => {
+                    settings-modified = true;
+                }
+            }
+        }
+    }
+
+    HorizontalLayout {
+        spacing: UAppTheme.spacing-base;
+        VerticalLayout {
+            alignment: center;
+            UText {
+                text: @tr("Auto-close delay (seconds)");
+            }
+        }
+
+        notif-timeout-input := UInput {
+            width: 70px * UAppTheme.scale-factor;
+            text: SettingsPageLogic.get-notif-timeout();
+            input-type: number;
+            enabled: enable-timeout.checked;
+            edited => {
+                settings-modified = true;
+            }
+        }
+    }
+
+    HorizontalLayout {
+        VerticalLayout {
+            alignment: center;
+            UText {
+                text: @tr("Default interpreter");
+            }
+        }
+
+        Rectangle {
+            horizontal-stretch: 1;
+        }
+
+        default-interpreter-input := UInput {
+            text: SettingsPageLogic.get-default-interpreter();
+            edited => {
+                settings-modified = true;
+            }
+        }
+    }
+
+    Rectangle {
+        vertical-stretch: 1;
+    }
+
+    UCenter {
+        UButton {
+            text: @tr("Save");
+            variant: primary;
+            enabled: settings-modified;
+            clicked => {
+                SettingsPageLogic.save-settings(
+					default-interpreter-input.text,
+					language-select.options[language-select.current-index].value,
+					scale-factor-select.options[scale-factor-select.current-index].value.to-float(),
+					notif-timeout-input.text.to-float(),
+					enable-timeout.checked,
+				);
+                settings-modified = false;
+            }
+        }
+    }
+}
+
+global SettingsTR {
+    pure public function get-scale-factor-string(scale-factor: float) -> string {
+        if scale-factor == 0.5 {
+            return @tr("50%");
+        }
+        if scale-factor == 0.75 {
+            return @tr("75%");
+        }
+        if scale-factor == 0.9 {
+            return @tr("90%");
+        }
+        if scale-factor == 1 {
+            return @tr("100%");
+        }
+        if scale-factor == 1.1 {
+            return @tr("110%");
+        }
+        if scale-factor == 1.25 {
+            return @tr("125%");
+        }
+        if scale-factor == 1.5 {
+            return @tr("150%");
+        }
+        if scale-factor == 1.75 {
+            return @tr("175%");
+        }
+        if scale-factor == 2 {
+            return @tr("200%");
+        }
+        return @tr("Unknown");
+    }
+    pure public function get-language-string(language: string) -> string {
+        if language == "en" {
+            return @tr("English");
+        }
+        if language == "fr" {
+            return @tr("French");
+        }
+        return @tr("Unknown");
+    }
+}

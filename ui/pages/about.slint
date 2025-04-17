@@ -1,0 +1,108 @@
+import { UAppTheme } from "@sleek-ui/app-theme.slint";
+import { TemplatePage } from "../components/template_page.slint";
+import { UText, ULink } from "@sleek-ui/widgets.slint";
+import { UCenter } from "@sleek-ui/layouts/center.slint";
+import { AboutSlint } from "std-widgets.slint";
+
+
+export global AboutPageLogic {
+    callback open-url(url: string);
+}
+
+export component AboutPage inherits TemplatePage {
+    VerticalLayout {
+        alignment: space-between;
+        VerticalLayout {
+            alignment: start;
+            spacing: UAppTheme.spacing-base;
+            UText {
+                text: "This software allows you to execute scripts with a simple click.";
+            }
+
+            HorizontalLayout {
+                alignment: start;
+                UText {
+                    text: "Made by: ";
+                }
+
+                ULink {
+                    text: "uAtomicBoolean";
+                    clicked => {
+                        AboutPageLogic.open-url("https://github.com/uAtomicBoolean");
+                    }
+                }
+            }
+
+            HorizontalLayout {
+                alignment: start;
+                UText {
+                    text: "Idea from: ";
+                }
+
+                ULink {
+                    text: "LotharieSlayer";
+                    clicked => {
+                        AboutPageLogic.open-url("https://github.com/LotharieSlayer");
+                    }
+                }
+            }
+
+            HorizontalLayout {
+                alignment: start;
+                UText {
+                    text: "Source: ";
+                }
+
+                ULink {
+                    text: "Github";
+                    clicked => {
+                        AboutPageLogic.open-url("https://github.com/uAtomicBoolean/scriptboard");
+                    }
+                }
+            }
+        }
+
+        VerticalLayout {
+            alignment: end;
+            HorizontalLayout {
+                alignment: center;
+                TouchArea {
+                    mouse-cursor: pointer;
+                    clicked => {
+                        AboutPageLogic.open-url("https://slint.dev");
+                    }
+                    AboutSlint {
+                        height: 100px * UAppTheme.scale-factor;
+                    }
+                }
+            }
+
+            UCenter {
+                v-alignment: end;
+                UText {
+                    font-size: UAppTheme.font-size-smaller;
+                    text: "Copyright (C) 2025 uAtomicBoolean";
+                }
+            }
+
+            UCenter {
+                v-alignment: end;
+                u-padding-top: UAppTheme.padding-base;
+                ULink {
+                    t-font-size: UAppTheme.font-size-smaller;
+                    text: "License: GNU General Public License v3.0";
+                    clicked => {
+                        AboutPageLogic.open-url("https://github.com/uAtomicBoolean/scriptboard/blob/main/LICENSE.txt");
+                    }
+                }
+            }
+
+            VerticalLayout {
+                alignment: end;
+                HorizontalLayout {
+                    alignment: center;
+                }
+            }
+        }
+    }
+}

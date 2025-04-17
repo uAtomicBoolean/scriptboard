@@ -1,0 +1,61 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Run executable 'scriptboard'",
+			"cargo": {
+				"args": [
+					"build",
+					"--bin=scriptboard",
+					"--package=scriptboard",
+					"--release"
+				],
+				"filter": {
+					"name": "scriptboard",
+					"kind": "bin"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug executable 'scriptboard'",
+			"cargo": {
+				"args": [
+					"build",
+					"--bin=scriptboard",
+					"--package=scriptboard"
+				],
+				"filter": {
+					"name": "scriptboard",
+					"kind": "bin"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug unit tests in executable 'scriptboard'",
+			"cargo": {
+				"args": [
+					"test",
+					"--no-run",
+					"--bin=scriptboard",
+					"--package=scriptboard"
+				],
+				"filter": {
+					"name": "scriptboard",
+					"kind": "bin"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		}
+	]
+}

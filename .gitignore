@@ -22,3 +22,5 @@ Cargo.lock
 
 dist/*
 !dist/.gitkeep
+.env
+.vscode/settings.json

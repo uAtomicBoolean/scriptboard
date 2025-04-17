@@ -1,162 +1,73 @@
 import "assets/fonts/Inter-Italic-VariableFont_opsz,wght.ttf";
 import "assets/fonts/Inter-VariableFont_opsz,wght.ttf";
 
-import { ListView } from "std-widgets.slint";
+// UI library
+import { UAppTheme } from "@sleek-ui/app-theme.slint";
+import { UModal } from "@sleek-ui/widgets.slint";
 
-import { UAppTheme } from "sleek-ui/app-theme.slint";
-import { UText, UButton, UIconButton, UInput, UDivider, USpinner } from "sleek-ui/widgets.slint";
+// Components
+import { Header, HeaderStatus } from "components/header.slint";
+import { AddScriptModal, AddScriptModalLogic } from "components/add-script-modal.slint";
+import { ScriptSettingsModal, ScriptSettingsModalLogic } from "components/script-settings-modal.slint";
+import {
+	NotificationsOverlay,
+	NotifsOverlayLogic,
+	NotifTypeEnum,
+	NotifStringEnum
+} from "components/notifications-overlay.slint";
 
-
-export struct Script {
-	id: int,
-	name: string,
-	description: string,
-	path: string,
-	running: bool,
-	errored: bool,
-}
+// Pages
+import { AboutPage, AboutPageLogic } from "pages/about.slint";
+import { MainPage, MainPageLogic } from "pages/main.slint";
+import { SettingsPage, SettingsPageLogic } from "pages/settings.slint";
 
 
 export component Scriptboard inherits Window {
     title: "Scriptboard";
     default-font-family: "Inter";
-    default-font-size: 14px;
-    width: 700px;
-    height: 400px;
+    default-font-size: 14px * UAppTheme.scale-factor;
+    min-width: 700px;
+    min-height: 400px;
+    preferred-width: 1000px;
+    preferred-height: 550px;
     background: UAppTheme.bg-container;
-    in-out property <int> script-id-incr: 0;
-    in-out property <string> new-script-description <=> input-description.text;
-    in-out property <string> new-script-name;
-    in-out property <string> new-script-path;
-    in-out property <bool> missing-description: false;
-    in-out property <bool> missing-path: false;
-    in-out property <[Script]> scripts;
-    callback script-select <=> script-select.clicked;
-    callback add-script(script-id: int, description: string, name: string, path: string);
-    callback execute-script(id: int, path: string);
-    callback remove-script(script-id: int);
-    public function reset-input-zone() {
-        new-script-description = "";
-        new-script-name = "";
-        new-script-path = "";
-        missing-description = false;
-        missing-path = false;
-    }
     VerticalLayout {
-        alignment: start;
-        height: root.height;
-        VerticalLayout {
-            spacing: 4px;
-            padding: 4px;
-            HorizontalLayout {
-                spacing: 4px;
-                VerticalLayout {
-                    alignment: center;
-                    UText {
-                        text: "Script description :";
-                    }
-                }
-
-                input-description := UInput {
-                    horizontal-stretch: 1;
-                    error: root.missing-description;
-                    edited => {
-                        root.missing-description = false;
-                    }
-                    accepted => {
-                        root.add-script(root.script-id-incr, root.new-script-description, root.new-script-name, root.new-script-path);
-                    }
-                }
-            }
-
-            HorizontalLayout {
-                spacing: 4px;
-                script-select := UButton {
-                    text: "Select script";
-                }
-
-                VerticalLayout {
-                    alignment: center;
-                    UText {
-                        horizontal-stretch: 1;
-                        text: root.new-script-path != "" ? root.new-script-name : "Select a script";
-                        color: root.missing-path ? UAppTheme.danger : UAppTheme.text;
-                        overflow: elide;
-                    }
-                }
-
-                add-script-btn := UButton {
-                    text: "Add script";
-                    type: primary;
-                    clicked => {
-                        root.add-script(root.script-id-incr, root.new-script-description, root.new-script-name, root.new-script-path);
-                        root.script-id-incr += 1;
-                    }
-                }
+        alignment: stretch;
+        Header {
+            height: 40px * UAppTheme.scale-factor;
+            vertical-stretch: 0;
+            open-add-script-modal => {
+                add-script-modal.show();
             }
         }
 
-        UDivider {
-            width: parent.width;
-        }
-
-        VerticalLayout {
-            alignment: start;
-            padding-top: 4px;
-            padding-left: 4px;
-            height: 100%;
-            ListView {
-                height: 100%;
-                for script in root.scripts: VerticalLayout {
-                    padding-bottom: 4px;
-                    padding-right: 8px;
-                    Rectangle {
-                        background: UAppTheme.bg-elevated;
-                        border-width: 1px;
-                        border-radius: UAppTheme.radius-base;
-                        border-color: UAppTheme.border;
-                        drop-shadow-blur: 3px;
-                        drop-shadow-color: UAppTheme.border;
-                        HorizontalLayout {
-                            width: parent.width;
-                            padding: 8px;
-                            spacing: 4px;
-
-							if script.running: VerticalLayout {
-								alignment: center;
-								USpinner { }
-							}
-
-                            VerticalLayout {
-                                alignment: center;
-                                UText {
-                                    horizontal-stretch: 1;
-                                    text: script.description;
-									color: script.errored ? UAppTheme.danger : UAppTheme.text;
-                                    font-weight: 600;
-                                    overflow: elide;
-                                }
-                            }
-
-                            UButton {
-                                text: "Execute";
-                                type: primary;
-                                clicked => {
-									script.running = true;
-                                    root.execute-script(script.id, script.path);
-                                }
-                            }
-
-                            UIconButton {
-                                icon: @image-url("assets/icons/trash-2.svg");
-                                clicked => {
-                                    root.remove-script(script.id);
-                                }
-                            }
-                        }
-                    }
-                }
+        if HeaderStatus.current-page == "main": main-page := MainPage {
+            open-script-settings(script, script_index) => {
+                script-settings.script = script;
+                script-settings.script_index = script_index;
+                script-settings.show();
             }
         }
+        if HeaderStatus.current-page == "settings": SettingsPage { }
+        if HeaderStatus.current-page == "about": AboutPage { }
     }
+
+    notification-overlay := NotificationsOverlay { }
+
+    add-script-modal := AddScriptModal { }
+
+    script-settings := ScriptSettingsModal { }
 }
+
+export { 
+	UAppTheme,
+	AddScriptModalLogic,
+	ScriptSettingsModalLogic,
+	AboutPageLogic,
+	MainPageLogic,
+	SettingsPageLogic,
+	NotifsOverlayLogic,
+	NotifTypeEnum,
+	NotifStringEnum
+}
+export { ScriptOutputWindow } from "windows/script_output_window.slint";

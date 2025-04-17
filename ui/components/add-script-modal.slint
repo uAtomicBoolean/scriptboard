@@ -1,0 +1,163 @@
+import { UAppTheme } from "@sleek-ui/app-theme.slint";
+import { UCheckbox, UCollapse, UInput, UIconButton, UModal, UText } from "@sleek-ui/widgets.slint";
+
+import { ScrollView } from "std-widgets.slint";
+
+import { Script } from "../structs.slint";
+
+
+struct ScriptSelectionResult {
+	script-selected: bool,
+	filename: string,
+	path: string,
+}
+
+export global AddScriptModalLogic {
+    pure callback get-default-interpreter() -> string;
+    callback select-script-file() -> ScriptSelectionResult;
+    callback load-script(script: Script);
+}
+
+export component AddScriptModal inherits UModal {
+    property <ScriptSelectionResult> script-selection-result;
+    property <string> script-path;
+    property <string> script-filename;
+    t-modal-min-width: 500px * UAppTheme.scale-factor;
+    t-modal-max-width: 500px * UAppTheme.scale-factor;
+    title: @tr("Add a script");
+    accept-btn-enabled: name-input.text != "" && script-path != "";
+    accepted => {
+        AddScriptModalLogic.load-script({
+            name: name-input.text,
+            filename: script-filename,
+            path: script-path,
+            need-admin: need-admin-checkbox.checked,
+            notifs-enabled: notifs-checkbox.checked,
+            interpreter: interpreter-input.text,
+            args: args-input.text,
+            running: false,
+        });
+    }
+    showed => {
+        script-path = "";
+        script-filename = "";
+        name-input.text = "";
+        args-input.text = "";
+        need-admin-checkbox.checked = false;
+        notifs-checkbox.checked = false;
+        interpreter-input.text = AddScriptModalLogic.get-default-interpreter();
+    }
+    GridLayout {
+        spacing: UAppTheme.spacing-big;
+        Row {
+            VerticalLayout {
+                alignment: center;
+                UText {
+                    text: @tr("Script name:");
+                }
+            }
+
+            name-input := UInput {
+                horizontal-stretch: 1;
+                placeholder: @tr("Sync folder");
+            }
+        }
+
+        Row {
+            VerticalLayout {
+                alignment: center;
+                UText {
+                    text: @tr("Script file:");
+                }
+            }
+
+            HorizontalLayout {
+                spacing: UAppTheme.spacing-base;
+                horizontal-stretch: 1;
+                select-script-btn := UIconButton {
+                    icon: @image-url("../assets/icons/upload.svg");
+                    border-radius: UAppTheme.radius-base;
+                    clicked => {
+                        script-selection-result = AddScriptModalLogic.select-script-file();
+                        if script-selection-result.script-selected {
+                            script-filename = script-selection-result.filename;
+                            script-path = script-selection-result.path;
+                        }
+                    }
+                }
+
+                VerticalLayout {
+                    alignment: center;
+                    script-name-display := UText {
+                        horizontal-stretch: 2;
+                        text: script-path == "" ? @tr("Select a file") : script-filename;
+                        wrap: no-wrap;
+                        overflow: elide;
+                    }
+                }
+            }
+        }
+
+        Row {
+            VerticalLayout {
+                alignment: center;
+                UText {
+                    text: @tr("Interpreter:");
+                }
+            }
+
+            interpreter-input := UInput {
+                horizontal-stretch: 1;
+            }
+        }
+
+        Row {
+            VerticalLayout {
+                alignment: center;
+                UText {
+                    text: @tr("Arguments:");
+                }
+            }
+
+            args-input := UInput {
+                horizontal-stretch: 1;
+            }
+        }
+
+        Row {
+            VerticalLayout {
+                alignment: center;
+                UText {
+                    text: @tr("Administrator:");
+                }
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+                HorizontalLayout {
+                    alignment: start;
+                    need-admin-checkbox := UCheckbox {
+                        enabled: Platform.os == OperatingSystemType.linux;
+                    }
+                }
+            }
+        }
+
+        Row {
+            VerticalLayout {
+                alignment: center;
+                UText {
+                    text: @tr("Notifications:");
+                }
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+                HorizontalLayout {
+                    alignment: start;
+                    notifs-checkbox := UCheckbox { }
+                }
+            }
+        }
+    }
+}

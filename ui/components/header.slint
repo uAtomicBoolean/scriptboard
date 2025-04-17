@@ -1,0 +1,78 @@
+import { UAppTheme } from "@sleek-ui/app-theme.slint";
+import { UButton, UDivider } from "@sleek-ui/widgets.slint";
+import { Button } from "std-widgets.slint";
+
+
+export global HeaderStatus {
+    in-out property <string> current-page: "main";
+}
+
+export component Header inherits Rectangle {
+    callback open-add-script-modal <=> add-script-btn.clicked;
+    width: 100%;
+    background: UAppTheme.bg-container;
+    VerticalLayout {
+        HorizontalLayout {
+            alignment: space-between;
+            height: 40px * UAppTheme.scale-factor;
+            padding: UAppTheme.padding-base;
+
+            HorizontalLayout {
+                spacing: UAppTheme.spacing-base;
+                VerticalLayout {
+                    alignment: center;
+                    UButton {
+                        variant: text;
+                        text: @tr("Home");
+                        icon: @image-url("../assets/icons/house.svg");
+                        icon-placement: start;
+                        checked: HeaderStatus.current-page == "main";
+                        clicked => {
+                            HeaderStatus.current-page = "main";
+                        }
+                    }
+                }
+
+                VerticalLayout {
+                    alignment: center;
+                    UButton {
+                        variant: text;
+                        text: @tr("Settings");
+                        icon: @image-url("../assets/icons/settings.svg");
+                        icon-placement: start;
+                        checked: HeaderStatus.current-page == "settings";
+                        clicked => {
+                            HeaderStatus.current-page = "settings";
+                        }
+                    }
+                }
+
+                VerticalLayout {
+                    alignment: center;
+                    UButton {
+                        variant: text;
+                        text: @tr("About");
+                        icon: @image-url("../assets/icons/info.svg");
+                        icon-placement: start;
+                        checked: HeaderStatus.current-page == "about";
+                        clicked => {
+                            HeaderStatus.current-page = "about";
+                        }
+                    }
+                }
+            }
+
+            VerticalLayout {
+                alignment: center;
+                add-script-btn := UButton {
+                    text: @tr("Add a script");
+                    variant: primary;
+                    icon: @image-url("../assets/icons/plus.svg");
+                    icon-placement: start;
+                }
+            }
+        }
+
+        UDivider { }
+    }
+}

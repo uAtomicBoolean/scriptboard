@@ -1,0 +1,51 @@
+name: Windows
+run-name: Build project
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  build:
+    permissions:
+      contents: write
+    runs-on: windows-latest
+    env:
+      ENV: prod
+      SLINT_BACKEND: winit-skia
+      SLEEK_UI_PATH: ${{ github.workspace }}/sleek-ui/ui/sleek-ui
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      
+      - name: Check out sleek-ui repository
+        uses: actions/checkout@v4
+        with:
+          repository: uAtomicBoolean/sleek-ui
+          path: ./sleek-ui
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+
+      - name: Package the project
+        run: |
+          cargo install cargo-packager --locked
+          cargo packager --release
+
+      - name: Rename binary
+        run: |
+          cp target/release/scriptboard.exe target/release/scriptboard-${{ github.ref_name }}-x86_64-windows.exe
+        shell: bash
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: scriptboard v${{ github.ref_name }}
+          body_path: changelogs/${{ github.ref_name }}-CHANGELOG.txt
+          files: |
+            target/release/scriptboard-${{ github.ref_name }}-x86_64-windows.exe
+            dist/scriptboard*

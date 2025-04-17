@@ -1,0 +1,46 @@
+import { UAppTheme } from "@sleek-ui/app-theme.slint";
+
+import { Script } from "../structs.slint";
+import { ScriptCard } from "../components/script-card.slint";
+
+import { ScrollView } from "std-widgets.slint";
+
+
+export global MainPageLogic {
+    in-out property <[Script]> scripts;
+    callback execute-script(script: Script, script_index: int);
+    callback open-script-output(script: Script);
+}
+
+export component MainPage {
+    property <length> card-spacing: UAppTheme.padding-big;
+    property <length> card-width: (120px * UAppTheme.scale-factor + card-spacing);
+    property <length> card-height: (150px * UAppTheme.scale-factor + card-spacing);
+    property <int> columns: floor(grid-layout.width / card-width);
+    callback open-script-settings(script: Script, script_index: int);
+    vertical-stretch: 1;
+    ScrollView {
+        viewport-height: ceil(MainPageLogic.scripts.length / columns) * card-height + UAppTheme.padding-big;
+        VerticalLayout {
+            padding: UAppTheme.padding-big;
+            grid-layout := Rectangle {
+                for script[idx] in MainPageLogic.scripts: ScriptCard {
+                    name: script.name;
+                    script-running: script.running;
+                    x: (mod(idx, columns) * card-width);
+                    y: (floor(idx / columns) * card-height);
+                    clicked => {
+                        script.running = true;
+                        MainPageLogic.execute-script(script, idx);
+                    }
+                    open-output => {
+                        MainPageLogic.open-script-output(script);
+                    }
+                    open-settings => {
+                        open-script-settings(script, idx);
+                    }
+                }
+            }
+        }
+    }
+}

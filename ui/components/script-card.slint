@@ -1,0 +1,87 @@
+import { UAppTheme } from "@sleek-ui/app-theme.slint";
+import { ButtonInterface } from "@sleek-ui/utils/button-interface.slint";
+import { UCard, UCenter, UIconButton, USpinner, UText, UTitle } from "@sleek-ui/widgets.slint";
+
+
+export component ScriptCard inherits ButtonInterface {
+    in-out property <string> name;
+    in-out property <bool> script-running: false;
+    callback open-output <=> btn-open-output.clicked;
+    callback open-settings <=> btn-open-settings.clicked;
+    enabled: !script-running;
+    width: 120px * UAppTheme.scale-factor;
+    height: 150px * UAppTheme.scale-factor;
+    UCard {
+        background: root.pressed ? UAppTheme.color-fill-tertiary : UAppTheme.bg-elevated;
+        VerticalLayout {
+            padding: UAppTheme.padding-base;
+            spacing: UAppTheme.spacing-base;
+            Rectangle {
+                horizontal-stretch: 1;
+                clip: true;
+                height: 75px * UAppTheme.scale-factor;
+                HorizontalLayout {
+                    alignment: center;
+                    UTitle {
+                        text: name;
+                        color: script-running ? UAppTheme.text-disabled : UAppTheme.text-heading;
+                        level: 6;
+                        opacity: root.has-hover ? 0 : 1;
+                        wrap: word-wrap;
+                        animate opacity { duration: 250ms; }
+                    }
+                }
+
+                Rectangle {
+                    opacity: root.has-hover ? 1 : 0;
+                    animate opacity { duration: 250ms; }
+                    UCenter {
+                        UTitle {
+                            text: @tr("Run");
+                            level: 6;
+                            opacity: root.has-hover ? 1 : 0;
+                            animate opacity { duration: 250ms; }
+                        }
+                    }
+                }
+
+                Rectangle {
+                    UCenter {
+                        USpinner {
+                            size: 30px * UAppTheme.scale-factor;
+                            opacity: script-running ? 1 : 0;
+                            animate opacity { duration: 250ms; }
+                        }
+                    }
+                }
+            }
+
+            Rectangle {
+                vertical-stretch: 1;
+            }
+
+            btn-open-output := UIconButton {
+                horizontal-stretch: 1;
+                enabled: !script-running;
+                icon: @image-url("../assets/icons/square-terminal.svg");
+                border-radius: UAppTheme.radius-base;
+                accessible-label: @tr("Open script's output window.");
+            }
+
+            btn-open-settings := UIconButton {
+                horizontal-stretch: 1;
+                icon: @image-url("../assets/icons/settings.svg");
+                border-radius: UAppTheme.radius-base;
+                accessible-label: @tr("Open script's settings.");
+            }
+        }
+
+        animate background { duration: 250ms; }
+        states [
+            focus when root.has-focus: {
+                border-color: UAppTheme.focus-color;
+                border-width: UAppTheme.focus-border-width;
+            }
+        ]
+    }
+}

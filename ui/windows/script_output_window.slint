@@ -1,0 +1,38 @@
+import "../assets/fonts/Inter-Italic-VariableFont_opsz,wght.ttf";
+import "../assets/fonts/Inter-VariableFont_opsz,wght.ttf";
+
+import { UAppTheme } from "@sleek-ui/app-theme.slint";
+import { UText } from "@sleek-ui/widgets/text.slint";
+
+import { ScrollView } from "std-widgets.slint";
+
+import { Script } from "../structs.slint";
+
+
+export component ScriptOutputWindow inherits Window {
+    in-out property <Script> script;
+    title: @tr("Output - ") + script.name;
+    default-font-family: "Inter";
+    default-font-size: 14px * UAppTheme.scale-factor;
+    min-width: 500px;
+    min-height: 500px;
+    background: UAppTheme.bg-container;
+    VerticalLayout {
+        alignment: start;
+        HorizontalLayout {
+            alignment: start;
+            ScrollView {
+                width: 100%;
+                height: 100%;
+                viewport-width: output.width;
+                viewport-height: output.height;
+                output := UText {
+                    vertical-stretch: 1;
+                    horizontal-stretch: 1;
+                    text: script.output;
+                    wrap: word-wrap;
+                }
+            }
+        }
+    }
+}
