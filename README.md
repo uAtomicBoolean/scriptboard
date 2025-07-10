@@ -13,11 +13,11 @@ Idea from [@LotharieSlayer](https://github.com/LotharieSlayer).
 > [!TIP]
 > Feel free to scan Scriptboard with [Virustotal](https://www.virustotal.com/gui/home/upload).
 
-**Download and install:**  
+### Download and install 
 You can download Scriptboard from the [Releases page](https://github.com/uAtomicBoolean/scriptboard/releases).  
 You can choose between downloading an installer or a portable executable to avoid having to install Scriptboard.  
 
-**Use:**  
+### Use  
 Start by adding scripts by clicking on the `Add script` top-right button. This will open a modal in which you will be able to configure your script.  
 Then, you only need to click on the script's card to execute it.  
 
@@ -29,7 +29,7 @@ Some explanations about the script's settings:
 - **Notification:** if checked, notifications will be sent in the application (no system notifications) when the script is done running.
 - **Administrator:** if checked, Scriptboard will run the script with admin privileges, which might require the admin password.
 
-**Platfroms specificities:**
+### Platfroms specificities
 - **MacOS:** If you get `Scriptboard.app is damaged and cannot be opened` when opening Scriptboard, then you can try to run `sudo xattr -rd com.apple.quarantine /Applications/Scriptboar.app`. Alternatively, you can go into the **Privacy & Security** settings pane and scroll down to **Security** to remove the quarantine.
 - **Windows:** Scriptboard might be flagged as a threat. You can ignore this by clicking "More Info" and "Run Anyways".
 - **Linux:** Scriptboard is available on Linux but you may encounter some bugs depending on the distro you're running.
