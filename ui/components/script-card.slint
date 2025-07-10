@@ -20,19 +20,21 @@ export component ScriptCard inherits ButtonInterface {
                 horizontal-stretch: 1;
                 clip: true;
                 height: 75px * UAppTheme.scale-factor;
-                HorizontalLayout {
-                    alignment: center;
+                VerticalLayout {
+                    alignment: start;
                     UTitle {
                         text: name;
                         color: script-running ? UAppTheme.text-disabled : UAppTheme.text-heading;
                         level: 6;
                         opacity: root.has-hover ? 0 : 1;
                         wrap: word-wrap;
+                        horizontal-alignment: center;
                         animate opacity { duration: 250ms; }
                     }
                 }
 
                 Rectangle {
+                    z: 40;
                     opacity: root.has-hover ? 1 : 0;
                     animate opacity { duration: 250ms; }
                     UCenter {
@@ -61,18 +63,22 @@ export component ScriptCard inherits ButtonInterface {
             }
 
             btn-open-output := UIconButton {
+                opacity: root.pressed ? 0 : 1;
                 horizontal-stretch: 1;
                 enabled: !script-running;
                 icon: @image-url("../assets/icons/square-terminal.svg");
                 border-radius: UAppTheme.radius-base;
                 accessible-label: @tr("Open script's output window.");
+                animate opacity { duration: 250ms; }
             }
 
             btn-open-settings := UIconButton {
+                opacity: root.pressed ? 0 : 1;
                 horizontal-stretch: 1;
                 icon: @image-url("../assets/icons/settings.svg");
                 border-radius: UAppTheme.radius-base;
                 accessible-label: @tr("Open script's settings.");
+                animate opacity { duration: 250ms; }
             }
         }
 
