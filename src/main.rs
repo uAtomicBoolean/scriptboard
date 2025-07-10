@@ -30,15 +30,7 @@ fn setup_logger() -> Result<(), fern::InitError> {
         return Ok(());
     }
 
-    let mut log_file_path = match dirs::data_local_dir() {
-        Some(p) => p,
-        None => {
-            dispatch.level(log::LevelFilter::Info).apply()?;
-            return Ok(());
-        }
-    };
-
-    log_file_path.push("scriptboard.log");
+    let log_file_path = app::utils::get_log_file_path();
     dispatch
         .level(log::LevelFilter::Info)
         .chain(fern::log_file(log_file_path)?)
