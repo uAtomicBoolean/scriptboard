@@ -75,9 +75,7 @@ export component NotificationsOverlay inherits Rectangle {
         height: notif-height;
         x: root.width - notif-width - n-padding;
         y: notif-height * idx + n-spacing * idx + n-padding;
-        init => {
-            self.opacity = 0;
-        }
+        opacity: 0;
         variant: NotifsOverlayLogic.get-notif-variant(notif.variant);
         title: notif.title;
         message: notif.message;
