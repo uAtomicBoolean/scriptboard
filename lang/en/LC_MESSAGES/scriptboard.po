@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2025-07-09 13:37+0000\n"
-"PO-Revision-Date: 2025-07-09 15:45+0200\n"
+"POT-Creation-Date: 2025-07-30 11:13+0000\n"
+"PO-Revision-Date: 2025-07-30 14:08+0200\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
-"Last-Translator: \n"
-"Language: en\n"
 
 #: ui/components/notifications-overlay.slint:47
 msgctxt "NotifsOverlayLogic"
@@ -147,20 +147,25 @@ msgctxt "Header"
 msgid "Add a script"
 msgstr "Add a script"
 
-#: ui/components/script-card.slint:40
+#: ui/components/script-card.slint:42
 msgctxt "ScriptCard"
 msgid "Run"
 msgstr "Run"
 
-#: ui/components/script-card.slint:68
+#: ui/components/script-card.slint:71
 msgctxt "ScriptCard"
 msgid "Open script's output window."
 msgstr "Open script's output window."
 
-#: ui/components/script-card.slint:75
+#: ui/components/script-card.slint:80
 msgctxt "ScriptCard"
 msgid "Open script's settings."
 msgstr "Open script's settings."
+
+#: ui/pages/main.slint:49
+msgctxt "MainPage"
+msgid "Add a script to start using this software."
+msgstr "Add a script to start using this software."
 
 #: ui/pages/settings.slint:23
 msgctxt "SettingsPage"

@@ -1,4 +1,5 @@
 import { UAppTheme } from "@sleek-ui/app-theme.slint";
+import { UCenter, UText } from "@sleek-ui/widgets.slint";
 
 import { Script } from "../structs.slint";
 import { ScriptCard } from "../components/script-card.slint";
@@ -16,10 +17,10 @@ export component MainPage {
     property <length> card-spacing: UAppTheme.padding-big;
     property <length> card-width: (120px * UAppTheme.scale-factor + card-spacing);
     property <length> card-height: (150px * UAppTheme.scale-factor + card-spacing);
-    property <int> columns: floor(grid-layout.width / card-width);
     callback open-script-settings(script: Script, script_index: int);
     vertical-stretch: 1;
-    ScrollView {
+    if MainPageLogic.scripts.length != 0: ScrollView {
+        property <int> columns: floor(grid-layout.width / card-width);
         viewport-height: ceil(MainPageLogic.scripts.length / columns) * card-height + UAppTheme.padding-big;
         VerticalLayout {
             padding: UAppTheme.padding-big;
@@ -41,6 +42,13 @@ export component MainPage {
                     }
                 }
             }
+        }
+    }
+    if MainPageLogic.scripts.length == 0: UCenter {
+        UText {
+            text: @tr("Add a script to start using this software.");
+            font-size: UAppTheme.font-size-bigger;
+            color: UAppTheme.text-disabled;
         }
     }
 }
