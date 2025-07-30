@@ -12,6 +12,7 @@ import { Script } from "../structs.slint";
 export component ScriptOutputWindow inherits Window {
     in-out property <Script> script;
     title: @tr("Output - ") + script.name;
+    icon: @image-url("../../res/linux/32x32.png");
     default-font-family: "Inter";
     default-font-size: 14px * UAppTheme.scale-factor;
     min-width: 500px;
