@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-07-09 13:37+0000\n"
+"POT-Creation-Date: 2025-07-30 11:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,19 +147,24 @@ msgctxt "Header"
 msgid "Add a script"
 msgstr ""
 
-#: ui/components/script-card.slint:40
+#: ui/components/script-card.slint:42
 msgctxt "ScriptCard"
 msgid "Run"
 msgstr ""
 
-#: ui/components/script-card.slint:68
+#: ui/components/script-card.slint:71
 msgctxt "ScriptCard"
 msgid "Open script's output window."
 msgstr ""
 
-#: ui/components/script-card.slint:75
+#: ui/components/script-card.slint:80
 msgctxt "ScriptCard"
 msgid "Open script's settings."
+msgstr ""
+
+#: ui/pages/main.slint:49
+msgctxt "MainPage"
+msgid "Add a script to start using this software."
 msgstr ""
 
 #: ui/pages/settings.slint:23
