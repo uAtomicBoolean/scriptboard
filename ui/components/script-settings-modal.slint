@@ -86,6 +86,7 @@ export component ScriptSettingsModal inherits UModal {
                         alignment: start;
                         need-admin-checkbox := UCheckbox {
                             checked: script.need-admin;
+                            enabled: Platform.os == OperatingSystemType.linux;
                         }
                     }
                 }
