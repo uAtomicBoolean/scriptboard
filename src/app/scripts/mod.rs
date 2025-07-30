@@ -1,4 +1,3 @@
-pub mod commands;
 pub mod execute;
 
 use rfd::FileDialog;
