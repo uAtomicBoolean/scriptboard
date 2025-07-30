@@ -32,7 +32,8 @@ jobs:
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
-    
+
+      # Use custom icons for macos.
       - name: Select icons
         run: |
           cp res/icon_macos.ico res/icon.ico
