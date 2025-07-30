@@ -1,0 +1,5 @@
+**Features:**
+- Add custom icons made by @LotharieSlayer (#7).
+- Add live reload to the output window (#6).
+- Add a button to restart a script from the output window (#6).
+- Add a background text in the main page when no scripts are added (#5).
