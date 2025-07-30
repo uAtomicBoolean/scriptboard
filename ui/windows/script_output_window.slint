@@ -10,7 +10,9 @@ import { Script } from "../structs.slint";
 
 
 export component ScriptOutputWindow inherits Window {
-    in-out property <Script> script;
+    in-out property <[Script]> scripts;
+    in-out property <int> script_index;
+    property <Script> script: scripts[script_index];
     title: @tr("Output - ") + script.name;
     icon: @image-url("../../res/linux/32x32.png");
     default-font-family: "Inter";
