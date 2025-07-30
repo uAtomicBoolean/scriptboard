@@ -65,7 +65,6 @@ export component ScriptCard inherits ButtonInterface {
             btn-open-output := UIconButton {
                 opacity: root.pressed ? 0 : 1;
                 horizontal-stretch: 1;
-                enabled: !script-running;
                 icon: @image-url("../assets/icons/square-terminal.svg");
                 border-radius: UAppTheme.radius-base;
                 accessible-label: @tr("Open script's output window.");
