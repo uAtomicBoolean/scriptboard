@@ -2,7 +2,7 @@ import "../assets/fonts/Inter-Italic-VariableFont_opsz,wght.ttf";
 import "../assets/fonts/Inter-VariableFont_opsz,wght.ttf";
 
 import { UAppTheme } from "@sleek-ui/app-theme.slint";
-import { UText } from "@sleek-ui/widgets/text.slint";
+import { UButton, UDivider, UText, UCenter } from "@sleek-ui/widgets.slint";
 
 import { ScrollView } from "std-widgets.slint";
 
@@ -13,6 +13,7 @@ export component ScriptOutputWindow inherits Window {
     in-out property <[Script]> scripts;
     in-out property <int> script_index;
     property <Script> script: scripts[script_index];
+    callback execute-script();
     title: @tr("Output - ") + script.name;
     icon: @image-url("../../res/linux/32x32.png");
     default-font-family: "Inter";
@@ -20,13 +21,39 @@ export component ScriptOutputWindow inherits Window {
     min-width: 700px;
     min-height: 500px;
     background: UAppTheme.bg-container;
-    ScrollView {
-        width: 100%;
-        height: 100%;
-        VerticalLayout {
-            alignment: start;
-            output := UText {
-                text: script.output;
+    VerticalLayout {
+        HorizontalLayout {
+            vertical-stretch: 0;
+            padding: UAppTheme.padding-base;
+            alignment: center;
+            height: 40px * UAppTheme.scale-factor;
+            VerticalLayout {
+                alignment: center;
+                UButton {
+                    variant: primary;
+                    text: @tr("Restart");
+                    icon: @image-url("../assets/icons/restart.svg");
+                    icon-placement: start;
+                    clicked => {
+                        execute-script();
+                    }
+                }
+            }
+        }
+
+        UDivider {
+            vertical-stretch: 0;
+        }
+
+        ScrollView {
+            vertical-stretch: 2;
+            VerticalLayout {
+                alignment: start;
+                padding-top: UAppTheme.padding-small;
+                padding-bottom: UAppTheme.padding-small;
+                output := UText {
+                    text: script.output;
+                }
             }
         }
     }

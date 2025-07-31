@@ -58,6 +58,25 @@ pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
             let app_theme = output_window.global::<UAppTheme>();
             app_theme.set_scale_factor(store::get_scale_factor());
 
+            // As global are not shared between components, we cannot use
+            // MainPageLogic.execute-script() in ScriptOutputWindow.
+            // Hence we need to manage a new callback from this window.
+            output_window.on_execute_script({
+                let ui_weak = ui_weak.clone();
+                let scripts_clone = scripts.clone();
+                move || {
+                    let mut script = scripts_clone.row_data(index as usize).unwrap();
+                    script.running = true;
+                    script.output = "".into();
+                    scripts_clone.set_row_data(index as usize, script.clone());
+                    crate::app::scripts::execute::execute_script(
+                        ui_weak.clone(),
+                        script,
+                        index as usize,
+                    );
+                }
+            });
+
             if let Err(err) = slint::select_bundled_translation(&store::get_language()) {
                 error!("Couldn't select the bundled translation.");
                 error!("{}", err.to_string());
