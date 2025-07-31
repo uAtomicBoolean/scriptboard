@@ -1,3 +1,5 @@
+Scriptboard 1.1.0 comes with new icons, a revamped output window for the scripts featuring live output and a basic command bar.
+
 **Features:**
 - Add custom icons made by @LotharieSlayer (#7).
 - Add live reload to the output window (#6).
