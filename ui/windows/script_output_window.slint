@@ -45,7 +45,7 @@ export component ScriptOutputWindow inherits Window {
             vertical-stretch: 0;
         }
 
-        ScrollView {
+        output-view := ScrollView {
             vertical-stretch: 2;
             VerticalLayout {
                 alignment: start;
@@ -55,6 +55,14 @@ export component ScriptOutputWindow inherits Window {
                     text: script.output;
                 }
             }
+        }
+    }
+
+    Timer {
+        running: script.running;
+        interval: 10ms;
+        triggered => {
+            output-view.viewport-y = - output-view.viewport-height + output-view.visible-height;
         }
     }
 }
