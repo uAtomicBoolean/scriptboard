@@ -83,7 +83,7 @@ pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
                 std::process::exit(1);
             }
 
-            let run_result = output_window.run();
+            let run_result = output_window.show();
 
             if let Err(err) = run_result {
                 // Not sending a notification because some errors are not critical.
