@@ -58,25 +58,30 @@ pub fn execute_script(ui_weak: Weak<Scriptboard>, script: Script, script_index: 
                 }
             };
 
-            let rc_ui_weak = Rc::new(ui_weak.clone());
             let reader = BufReader::new(process_stdout);
+            let uiw_rc = Rc::new(ui_weak.clone());
+
             reader
                 .lines()
                 .filter_map(|line| line.ok())
                 .for_each(|line| {
                     let index_clone = script_index.clone();
-                    println!("{}", line.clone());
-                    let _ = rc_ui_weak.upgrade_in_event_loop(move |ui| {
+
+                    let _ = uiw_rc.upgrade_in_event_loop(move |ui| {
                         let scripts_model = ui.global::<MainPageLogic>().get_scripts();
                         let scripts = scripts_model
                             .as_any()
                             .downcast_ref::<VecModel<Script>>()
                             .unwrap();
+
                         let mut script = scripts.row_data(index_clone).unwrap();
-                        let output_lines: VecModel<SharedString> =
+
+                        let mut output_lines: Vec<SharedString> =
                             script.output_lines.iter().collect();
                         output_lines.push(line.into());
-                        script.output_lines = Rc::new(output_lines).into();
+
+                        script.output_lines = Rc::new(VecModel::from(output_lines)).into();
+
                         scripts.set_row_data(index_clone, script);
                     });
                 });
