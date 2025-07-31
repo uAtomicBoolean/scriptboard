@@ -17,18 +17,16 @@ export component ScriptOutputWindow inherits Window {
     icon: @image-url("../../res/linux/32x32.png");
     default-font-family: "Inter";
     default-font-size: 14px * UAppTheme.scale-factor;
-    min-width: 500px;
+    min-width: 700px;
     min-height: 500px;
     background: UAppTheme.bg-container;
     ScrollView {
         width: 100%;
         height: 100%;
-        viewport-height: script.output-lines.length * UAppTheme.font-size-base;
         VerticalLayout {
             alignment: start;
-            for line in script.output-lines: UText {
-                text: line;
-                wrap: word-wrap;
+            output := UText {
+                text: script.output;
             }
         }
     }
