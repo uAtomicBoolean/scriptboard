@@ -30,12 +30,12 @@ jobs:
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
-    
+
       - name: Select icons
         run: |
-          cp res/icon_all.ico res/icon.ico
-          cp res/32x32_all.png res/32x32.png
-
+          cp res/linux/32x32.png res/32x32.png
+          cp res/linux/icon.png res/icon.png
+    
       - name: Package the project
         run: |
           cargo install cargo-packager --locked

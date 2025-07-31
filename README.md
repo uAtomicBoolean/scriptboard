@@ -39,3 +39,9 @@ Some explanations about the script's settings:
 - Get the latest release of [sleek-ui](https://github.com/uAtomicBoolean/sleek-ui).
 - Copy the `.env.example` file to a `.env` and set the env vars.
 - Run `cargo run`.
+
+**Get translatable strings on windows:**  
+```powershell
+$slintFiles = Get-ChildItem -Filter *.slint -Recurse | ForEach-Object { $_.FullName | Resolve-Path -Relative }
+& "slint-tr-extractor" -o "MY_PROJECT.pot" $slintFiles
+```

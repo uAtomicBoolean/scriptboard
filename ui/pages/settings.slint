@@ -73,7 +73,7 @@ export component SettingsPage inherits TemplatePage {
 
         language-select := USelect {
             property <[USelectOption]> options-data: [
-                { text: SettingsTR.get-language-string("en"), value: "en", enabled: true },
+                { text: SettingsTR.get-language-string("en_GB"), value: "en_GB", enabled: true },
                 { text: SettingsTR.get-language-string("fr"), value: "fr", enabled: true },
             ];
             width: 150px * UAppTheme.scale-factor;
@@ -210,7 +210,7 @@ global SettingsTR {
         return @tr("Unknown");
     }
     pure public function get-language-string(language: string) -> string {
-        if language == "en" {
+        if language == "en_GB" {
             return @tr("English");
         }
         if language == "fr" {

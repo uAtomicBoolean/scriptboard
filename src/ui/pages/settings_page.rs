@@ -25,12 +25,15 @@ pub fn init_ui(ui: Weak<Scriptboard>) {
     logic.on_get_language_current_index(|options| {
         let language = store::get_language();
         let lg_options: Vec<USelectOption> = options.iter().collect();
-        lg_options
-            .iter()
-            .position(|o| o.value == language)
-            .unwrap()
-            .try_into()
-            .unwrap()
+        let lg_position = match lg_options.iter().position(|o| o.value == language) {
+            Some(lg_pos) => lg_pos,
+            None => {
+                error!("Error while getting language value position.");
+                std::process::exit(1);
+            }
+        };
+
+        lg_position.try_into().unwrap()
     });
 
     logic.on_save_settings({

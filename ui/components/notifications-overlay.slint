@@ -10,6 +10,10 @@ export enum NotifTypeEnum {
 }
 
 export enum NotifStringEnum {
+	error-spawn-script,
+	error-script-output,
+	check-logs,
+	script-execution-cancelled,
 	script-execution-done,
 	script-execution-failed,
 	error-open-output-window-title,
@@ -43,6 +47,18 @@ export global NotifsOverlayLogic {
         return UNotificationVariant.info;
     }
     public pure function get-notif-string(str: NotifStringEnum) -> string {
+        if str == NotifStringEnum.error-spawn-script {
+            return @tr("Couldn't start the script");
+        }
+        if str == NotifStringEnum.error-script-output {
+            return @tr("No output for the script");
+        }
+        if str == NotifStringEnum.check-logs {
+            return @tr("Please check the logs.");
+        }
+        if str == NotifStringEnum.script-execution-cancelled {
+            return @tr("Script execution cancelled.");
+        }
         if str == NotifStringEnum.script-execution-done {
             return @tr("Script execution done.");
         }

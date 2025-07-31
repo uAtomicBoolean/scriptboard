@@ -53,8 +53,14 @@ category = "DeveloperTool"
 before-packaging-command = "cargo build --release"
 product-name = "Scriptboard"
 identifier = "com.scriptboard.app"
-resources = ["Cargo.toml", "src", "res/icon.ico", "res/32x32.png"]
-icons = ["res/32x32.png", "res/icon.ico"]
+resources = [
+	"Cargo.toml",
+	"src",
+	"res/icon.ico",
+	"res/icon.png",
+	"res/32x32.png",
+]
+icons = ["res/32x32.png", "res/icon.png", "res/icon.ico"]
 binaries_dir = "target/release"
 out_dir = "dist/"
 licenseFile = "LICENSE.txt"

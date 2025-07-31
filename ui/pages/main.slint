@@ -9,8 +9,8 @@ import { ScrollView } from "std-widgets.slint";
 
 export global MainPageLogic {
     in-out property <[Script]> scripts;
-    callback execute-script(script: Script, script_index: int);
-    callback open-script-output(script: Script);
+    callback execute-script(script_index: int);
+    callback open-script-output(index: int);
 }
 
 export component MainPage {
@@ -32,10 +32,11 @@ export component MainPage {
                     y: (floor(idx / columns) * card-height);
                     clicked => {
                         script.running = true;
-                        MainPageLogic.execute-script(script, idx);
+                        script.output = "";
+                        MainPageLogic.execute-script(idx);
                     }
                     open-output => {
-                        MainPageLogic.open-script-output(script);
+                        MainPageLogic.open-script-output(idx);
                     }
                     open-settings => {
                         open-script-settings(script, idx);

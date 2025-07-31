@@ -5,7 +5,7 @@ use crate::{
     UAppTheme,
 };
 use log::{error, warn};
-use slint::{ComponentHandle, ModelRc, VecModel, Weak};
+use slint::{ComponentHandle, Model, ModelRc, VecModel, Weak};
 use std::rc::Rc;
 
 pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
@@ -17,7 +17,9 @@ pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
 
     logic.on_execute_script({
         let ui_weak = ui.as_weak();
-        move |script, script_index| {
+        let scripts_clone = scripts.clone();
+        move |script_index| {
+            let script = scripts_clone.row_data(script_index as usize).unwrap();
             crate::app::scripts::execute::execute_script(
                 ui_weak.clone(),
                 script,
@@ -28,7 +30,10 @@ pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
 
     logic.on_open_script_output({
         let ui_weak = ui.as_weak();
-        move |script| {
+        let scripts_clone: Rc<VecModel<Script>> = scripts.clone();
+        move |index| {
+            let script: Script = scripts_clone.row_data(index as usize).unwrap();
+
             let output_window = match ScriptOutputWindow::new() {
                 Ok(uw) => uw,
                 Err(err) => {
@@ -46,10 +51,31 @@ pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
                     return;
                 }
             };
-            output_window.set_script(script.clone());
+            let script_name = script.name.clone();
+            output_window.set_scripts(ModelRc::new(scripts_clone.clone()));
+            output_window.set_script_index(index);
 
             let app_theme = output_window.global::<UAppTheme>();
             app_theme.set_scale_factor(store::get_scale_factor());
+
+            // As global are not shared between components, we cannot use
+            // MainPageLogic.execute-script() in ScriptOutputWindow.
+            // Hence we need to manage a new callback from this window.
+            output_window.on_execute_script({
+                let ui_weak = ui_weak.clone();
+                let scripts_clone = scripts.clone();
+                move || {
+                    let mut script = scripts_clone.row_data(index as usize).unwrap();
+                    script.running = true;
+                    script.output = "".into();
+                    scripts_clone.set_row_data(index as usize, script.clone());
+                    crate::app::scripts::execute::execute_script(
+                        ui_weak.clone(),
+                        script,
+                        index as usize,
+                    );
+                }
+            });
 
             if let Err(err) = slint::select_bundled_translation(&store::get_language()) {
                 error!("Couldn't select the bundled translation.");
@@ -64,7 +90,7 @@ pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
                 // Example: "Nested event loops are not supported" is raised on debian 11 wayland.
                 warn!(
                     "Couldn't open the output window for script \"{}\".",
-                    script.name
+                    script_name
                 );
                 warn!("{}", err.to_string());
             }
