@@ -20,18 +20,15 @@ export component ScriptOutputWindow inherits Window {
     min-width: 500px;
     min-height: 500px;
     background: UAppTheme.bg-container;
-    VerticalLayout {
-        alignment: start;
-        HorizontalLayout {
+    ScrollView {
+        width: 100%;
+        height: 100%;
+        viewport-height: script.output-lines.length * UAppTheme.font-size-base;
+        VerticalLayout {
             alignment: start;
-            ScrollView {
-                width: 100%;
-                height: 100%;
-                viewport-height: script.output-lines.length * UAppTheme.font-size-base;
-                for line in script.output-lines: UText {
-                    text: line;
-                    wrap: word-wrap;
-                }
+            for line in script.output-lines: UText {
+                text: line;
+                wrap: word-wrap;
             }
         }
     }
