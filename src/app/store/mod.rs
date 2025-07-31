@@ -12,6 +12,7 @@ use uuid::Uuid;
 
 static STORE: Lazy<Arc<Mutex<Store>>> = Lazy::new(|| {
     let store_path = crate::app::utils::get_store_path();
+    println!("{:?}", store_path);
     // Creating the file here even though the folder is created right before.
     // This reduce code repetition if the folder is already created but not the file.
     if !store_path.exists() {
@@ -23,7 +24,7 @@ static STORE: Lazy<Arc<Mutex<Store>>> = Lazy::new(|| {
             notif_timeout: 10,
             timeout_enabled: true,
             scale_factor: 1f32,
-            language: "en".into(),
+            language: "en_GB".into(),
             scripts: vec![],
         };
 
