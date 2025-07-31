@@ -65,4 +65,14 @@ export component ScriptOutputWindow inherits Window {
             output-view.viewport-y = - output-view.viewport-height + output-view.visible-height;
         }
     }
+
+	// Used to scroll to the end of the output when opening the window.
+    Timer {
+        running: true;
+        interval: 10ms;
+        triggered => {
+            output-view.viewport-y = - output-view.viewport-height + output-view.visible-height;
+            self.running = false;
+        }
+    }
 }
