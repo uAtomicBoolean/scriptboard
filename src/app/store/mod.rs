@@ -1,16 +1,14 @@
 pub mod structs;
 
+use crate::Script;
 use log::error;
 use once_cell::sync::Lazy;
 use std::{
     io::BufReader,
     sync::{Arc, Mutex, MutexGuard},
 };
-use structs::StoredScript;
+pub use structs::{Store, StoredScript};
 use uuid::Uuid;
-
-pub use self::structs::Store;
-use crate::Script;
 
 static STORE: Lazy<Arc<Mutex<Store>>> = Lazy::new(|| {
     let store_path = crate::app::utils::get_store_path();

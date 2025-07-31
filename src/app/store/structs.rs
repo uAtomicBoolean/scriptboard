@@ -1,5 +1,6 @@
 use crate::Script;
 use serde::{Deserialize, Serialize};
+use slint::{ModelRc, VecModel};
 
 #[derive(Serialize, Deserialize)]
 pub struct Store {
@@ -50,7 +51,7 @@ impl Into<Script> for StoredScript {
             interpreter: self.interpreter.into(),
             args: self.args.into(),
             running: false,
-            output: "".into(),
+            output_lines: ModelRc::new(VecModel::default()),
             status_code: 0,
         }
     }
@@ -68,7 +69,7 @@ impl Into<Script> for &StoredScript {
             interpreter: self.interpreter.clone().into(),
             args: self.args.clone().into(),
             running: false,
-            output: "".into(),
+            output_lines: ModelRc::new(VecModel::default()),
             status_code: 0,
         }
     }

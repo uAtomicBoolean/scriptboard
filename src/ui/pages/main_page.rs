@@ -17,7 +17,7 @@ pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
 
     logic.on_execute_script({
         let ui_weak = ui.as_weak();
-        let scripts_clone: Rc<VecModel<Script>> = scripts.clone();
+        let scripts_clone = scripts.clone();
         move |script_index| {
             let script = scripts_clone.row_data(script_index as usize).unwrap();
             crate::app::scripts::execute::execute_script(

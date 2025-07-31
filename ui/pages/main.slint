@@ -32,6 +32,7 @@ export component MainPage {
                     y: (floor(idx / columns) * card-height);
                     clicked => {
                         script.running = true;
+                        script.output-lines = [];
                         MainPageLogic.execute-script(idx);
                     }
                     open-output => {
