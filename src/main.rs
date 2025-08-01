@@ -58,7 +58,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     ui::pages::settings_page::init_ui(ui.as_weak());
 
     let app_theme = ui.global::<UAppTheme>();
+    let scriptboard_theme = ui.global::<ScriptboardThemes>();
+
     app_theme.set_scale_factor(store::get_scale_factor());
+    app_theme.set_theme(scriptboard_theme.get_default_theme());
 
     ui.window().on_close_requested(|| {
         if let Err(err) = slint::quit_event_loop() {

@@ -2,7 +2,7 @@ use crate::app::notifications::send_notification;
 use crate::app::store;
 use crate::{
     MainPageLogic, NotifStringEnum, NotifTypeEnum, Script, ScriptOutputWindow, Scriptboard,
-    UAppTheme,
+    ScriptboardThemes, UAppTheme,
 };
 use log::{error, warn};
 use slint::{ComponentHandle, Model, ModelRc, VecModel, Weak};
@@ -54,8 +54,12 @@ pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
             output_window.set_scripts(ModelRc::new(scripts_clone.clone()));
             output_window.set_script_index(index);
 
+            let ui = ui_weak.unwrap();
+
             let app_theme = output_window.global::<UAppTheme>();
+            let scriptboard_theme = ui.global::<ScriptboardThemes>();
             app_theme.set_scale_factor(store::get_scale_factor());
+            app_theme.set_theme(scriptboard_theme.get_default_theme());
 
             // As global are not shared between components, we cannot use
             // MainPageLogic.execute-script() in ScriptOutputWindow.
