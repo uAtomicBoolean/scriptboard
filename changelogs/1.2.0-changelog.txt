@@ -1,0 +1,2 @@
+**Features:**
+- It is now possible to preserve a script's output after restarting it (#18).

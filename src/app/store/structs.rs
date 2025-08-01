@@ -52,6 +52,7 @@ impl Into<Script> for StoredScript {
             args: self.args.into(),
             running: false,
             output: SharedString::new(),
+            preserve_output: false,
             status_code: 0,
         }
     }
@@ -70,6 +71,7 @@ impl Into<Script> for &StoredScript {
             args: self.args.clone().into(),
             running: false,
             output: SharedString::new(),
+            preserve_output: false,
             status_code: 0,
         }
     }

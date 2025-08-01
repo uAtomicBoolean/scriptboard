@@ -2,7 +2,7 @@ import "../assets/fonts/Inter-Italic-VariableFont_opsz,wght.ttf";
 import "../assets/fonts/Inter-VariableFont_opsz,wght.ttf";
 
 import { UAppTheme } from "@sleek-ui/app-theme.slint";
-import { UButton, UDivider, UText, UCenter } from "@sleek-ui/widgets.slint";
+import { UButton, UCheckbox, UDivider, UText, UCenter } from "@sleek-ui/widgets.slint";
 
 import { ScrollView } from "std-widgets.slint";
 
@@ -14,6 +14,7 @@ export component ScriptOutputWindow inherits Window {
     in-out property <int> script_index;
     property <Script> script: scripts[script_index];
     callback execute-script();
+    callback update-preserve-output(pre-out: bool);
     title: @tr("Output - ") + script.name;
     icon: @image-url("../../res/linux/32x32.png");
     default-font-family: "Inter";
@@ -25,8 +26,20 @@ export component ScriptOutputWindow inherits Window {
         HorizontalLayout {
             vertical-stretch: 0;
             padding: UAppTheme.padding-base;
-            alignment: center;
+            alignment: space-between;
             height: 40px * UAppTheme.scale-factor;
+            VerticalLayout {
+                alignment: center;
+                UCheckbox {
+                    checked: script.preserve-output;
+                    text: @tr("Preserve output");
+                    text-placement: end;
+                    changed checked => {
+                        root.update-preserve-output(self.checked);
+                    }
+                }
+            }
+
             VerticalLayout {
                 alignment: center;
                 UButton {

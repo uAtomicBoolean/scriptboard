@@ -1,17 +1,32 @@
+use super::commands::*;
 use crate::app::notifications::{send_notification, send_notification_with_custom_title};
 use crate::app::store::structs::StoredScript;
 use crate::{MainPageLogic, NotifStringEnum, NotifTypeEnum, Script, Scriptboard};
 use slint::{ComponentHandle, Model, VecModel, Weak};
 use std::io::{BufReader, Read};
-use std::process::{Command, Output, Stdio};
+use std::process::Output;
 use std::rc::Rc;
 
-#[cfg(target_os = "windows")]
-use std::os::windows::process::CommandExt;
+/// Prepare the scripts before its execution then start the execution.
+pub fn execute_script(
+    ui_weak: Weak<Scriptboard>,
+    scripts: Rc<VecModel<Script>>,
+    script_index: usize,
+) {
+    let mut script = scripts.row_data(script_index as usize).unwrap();
+    script.running = true;
+    if !script.preserve_output {
+        script.output = "".into();
+    } else {
+        script.output.push_str("\n");
+    }
+    scripts.set_row_data(script_index as usize, script.clone());
+    run_execution_script(ui_weak.clone(), script, script_index as usize);
+}
 
 /// Execute the script and store its output.
 /// This function updates the scripts list to update the UI.
-pub fn execute_script(ui_weak: Weak<Scriptboard>, script: Script, script_index: usize) {
+fn run_execution_script(ui_weak: Weak<Scriptboard>, script: Script, script_index: usize) {
     std::thread::spawn({
         let light_script: StoredScript = script.into();
         move || {
@@ -151,82 +166,4 @@ fn finish_script_execution(ui: Scriptboard, output: Option<Output>, script_index
     if script.notifs_enabled {
         send_notification_with_custom_title(ui.as_weak(), theme, script.name.into(), message);
     }
-}
-
-#[cfg(target_os = "linux")]
-fn get_linux_command(script: &StoredScript, parsed_args: Vec<String>) -> Command {
-    if !script.need_admin {
-        use std::process::Stdio;
-
-        let mut cmd = Command::new(&script.interpreter);
-        cmd.arg(&script.path)
-            .args(parsed_args)
-            .stdout(Stdio::piped());
-        return cmd;
-    }
-
-    let mut cmd = Command::new("pkexec");
-    cmd.args([&script.interpreter, &script.path])
-        .args(parsed_args)
-        .stdout(Stdio::piped());
-
-    cmd
-}
-
-#[cfg(target_os = "macos")]
-fn get_macos_command(script: &StoredScript, parsed_args: Vec<String>) -> Command {
-    if !script.need_admin {
-        let mut cmd = Command::new(&script.interpreter);
-        cmd.arg(&script.path)
-            .args(parsed_args)
-            .stdout(Stdio::piped());
-        return cmd;
-    }
-
-    let osascript_arg = format!(
-        "do shell script \"{} {} {}\" with prompt \"{}\" with administrator privileges",
-        &script.interpreter,
-        &script.path,
-        parsed_args.join(" "),
-        &script.name,
-    );
-
-    let mut cmd = Command::new("osascript");
-    cmd.arg("-e").arg(osascript_arg).stdout(Stdio::piped());
-
-    cmd
-}
-
-#[cfg(target_os = "windows")]
-fn get_windows_command(script: &StoredScript, parsed_args: Vec<String>) -> Command {
-    // Ask for admin password
-    // Start-Process cmd -ArgumentList "/C your_command_here" -Verb RunAs
-    // Example with custom interpreter :
-    // Start-Process cmd -ArgumentList "/C python -c \"print('Hello, World!')\"" -Verb RunAs
-
-    if !script.need_admin {
-        let mut cmd = Command::new(&script.interpreter);
-        cmd.arg("-File")
-            .arg(&script.path)
-            .args(parsed_args)
-            .creation_flags(0x08000000)
-            .stdout(Stdio::piped());
-        return cmd;
-    }
-
-    let script_args = format!(
-        "\"/C {} {} {}\"",
-        &script.interpreter,
-        &script.path,
-        parsed_args.join(" ")
-    );
-
-    let mut cmd: Command = Command::new("Start-Process");
-    cmd.arg("cmd")
-        .arg("-ArgumentList")
-        .arg(script_args)
-        .creation_flags(0x08000000)
-        .stdout(Stdio::piped());
-
-    cmd
 }
