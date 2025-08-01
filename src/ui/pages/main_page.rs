@@ -19,10 +19,9 @@ pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
         let ui_weak = ui.as_weak();
         let scripts_clone = scripts.clone();
         move |script_index| {
-            let script = scripts_clone.row_data(script_index as usize).unwrap();
             crate::app::scripts::execute::execute_script(
                 ui_weak.clone(),
-                script,
+                scripts_clone.clone(),
                 script_index as usize,
             );
         }
@@ -65,13 +64,9 @@ pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
                 let ui_weak = ui_weak.clone();
                 let scripts_clone = scripts.clone();
                 move || {
-                    let mut script = scripts_clone.row_data(index as usize).unwrap();
-                    script.running = true;
-                    script.output = "".into();
-                    scripts_clone.set_row_data(index as usize, script.clone());
                     crate::app::scripts::execute::execute_script(
                         ui_weak.clone(),
-                        script,
+                        scripts_clone.clone(),
                         index as usize,
                     );
                 }
