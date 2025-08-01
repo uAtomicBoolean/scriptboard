@@ -1,12 +1,12 @@
 [package]
 name = "scriptboard"
-version = "1.1.0"
+version = "1.1.1"
 edition = "2024"
 license = "GPL-3.0-only"
 
 [package.metadata.winresource]
 FileDescription = "Scriptboard"
-FileVersion = "1.1.0"
+FileVersion = "1.1.1"
 ProductName = "Scriptboard"
 Comments = "A simple desktop software to execute saved script files."
 OriginalFilename = "scriptboard.exe"
@@ -46,7 +46,7 @@ panic = "abort"
 strip = true
 
 [package.metadata.packager]
-version = "1.1.0"
+version = "1.1.1"
 authors = ["uAtomicBoolean"]
 copyright = "Copyright (C) 2025 uAtomicBoolean"
 category = "DeveloperTool"
