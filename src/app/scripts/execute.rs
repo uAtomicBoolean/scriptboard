@@ -15,7 +15,11 @@ pub fn execute_script(
 ) {
     let mut script = scripts.row_data(script_index as usize).unwrap();
     script.running = true;
-    script.output = "".into();
+    if !script.preserve_output {
+        script.output = "".into();
+    } else {
+        script.output.push_str("\n");
+    }
     scripts.set_row_data(script_index as usize, script.clone());
     run_execution_script(ui_weak.clone(), script, script_index as usize);
 }

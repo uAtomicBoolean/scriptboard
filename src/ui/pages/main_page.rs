@@ -72,6 +72,15 @@ pub fn init_ui(ui: Weak<Scriptboard>, scripts: Rc<VecModel<Script>>) {
                 }
             });
 
+            output_window.on_update_preserve_output({
+                let scripts_clone = scripts.clone();
+                move |preserve_output| {
+                    let mut script = scripts_clone.row_data(index as usize).unwrap();
+                    script.preserve_output = preserve_output;
+                    scripts_clone.set_row_data(index as usize, script);
+                }
+            });
+
             if let Err(err) = slint::select_bundled_translation(&store::get_language()) {
                 error!("Couldn't select the bundled translation.");
                 error!("{}", err.to_string());
