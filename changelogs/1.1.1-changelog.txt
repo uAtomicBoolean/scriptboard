@@ -1,2 +1,5 @@
+**Features:**
+- Closing the main window also close all the child windows (fa3145f1a42ab2e88eb58a20af9ca1d59414b6dd).
+
 **Fixes:**
-- Disable restart button when script is running.
+- Disable restart button when script is running (933a0f1aef7fd574d5187dba743390157cf39536).
