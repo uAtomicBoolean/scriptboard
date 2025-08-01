@@ -1,0 +1,2 @@
+**Fixes:**
+- Disable restart button when script is running.

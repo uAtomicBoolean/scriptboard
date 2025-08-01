@@ -30,6 +30,7 @@ export component ScriptOutputWindow inherits Window {
             VerticalLayout {
                 alignment: center;
                 UButton {
+                    enabled: !script.running;
                     variant: primary;
                     text: @tr("Restart");
                     icon: @image-url("../assets/icons/restart.svg");

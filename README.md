@@ -1,10 +1,10 @@
-# scriptboard
+<p align="center">
+	<img src="res/scripboard.png" width="40%" />
+</p>
+
+
 A simple desktop software to execute saved script files on linux, macOS and windows.  
 Idea from [@LotharieSlayer](https://github.com/LotharieSlayer).
-
-<p align="center">
-	<img src="images/main_page_screenshot.png" width="80%" />
-</p>
 
 > [!NOTE]
 > The admin execution option is currently only available on Linux systems.
@@ -45,3 +45,8 @@ Some explanations about the script's settings:
 $slintFiles = Get-ChildItem -Filter *.slint -Recurse | ForEach-Object { $_.FullName | Resolve-Path -Relative }
 & "slint-tr-extractor" -o "MY_PROJECT.pot" $slintFiles
 ```
+
+## Screenshots
+<p align="center">
+	<img src="images/main_page_screenshot.png" width="60%" />
+</p>

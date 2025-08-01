@@ -52,7 +52,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           name: scriptboard v${{ github.ref_name }}
-          body_path: changelogs/${{ github.ref_name }}-CHANGELOG.txt
+          body_path: changelogs/${{ github.ref_name }}-changelog.txt
           files: |
             target/release/scriptboard-${{ github.ref_name }}-aarch64-darwin
             dist/scriptboard*
