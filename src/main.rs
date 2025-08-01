@@ -60,6 +60,16 @@ fn main() -> Result<(), Box<dyn Error>> {
     let app_theme = ui.global::<UAppTheme>();
     app_theme.set_scale_factor(store::get_scale_factor());
 
+    ui.window().on_close_requested(|| {
+        if let Err(err) = slint::quit_event_loop() {
+            log::error!("Error when trying to quit the event loop.");
+            log::error!("{}", err.to_string());
+            log::error!("Forcefully killing the process.");
+            std::process::exit(0);
+        }
+        slint::CloseRequestResponse::HideWindow
+    });
+
     if let Err(err) = slint::select_bundled_translation(&store::get_language()) {
         error!("Couldn't select the bundled translation.");
         error!("{}", err.to_string());
