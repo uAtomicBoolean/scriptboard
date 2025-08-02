@@ -1,92 +1,99 @@
 import { UAppTheme } from "@sleek-ui/app-theme.slint";
 import { ButtonInterface } from "@sleek-ui/utils/button-interface.slint";
-import { UCard, UCenter, UIconButton, USpinner, UText, UTitle } from "@sleek-ui/widgets.slint";
+import { UCard, UCenter, UIconButton, USpinner, UText, UTitle, UButton } from "@sleek-ui/widgets.slint";
 
 
-export component ScriptCard inherits ButtonInterface {
-    in-out property <string> name;
+export component ScriptCard {
+    in-out property <string> name: "Placeholder";
+	// TODO replace with transparent color once #23 is implemented.
+    in-out property <color> chip-color: UAppTheme.primary;
+    in-out property <string> description: "This is a placeholder for the real script's description.";
     in-out property <bool> script-running: false;
-    callback open-output <=> btn-open-output.clicked;
-    callback open-settings <=> btn-open-settings.clicked;
-    enabled: !script-running;
-    width: 120px * UAppTheme.scale-factor;
+    property <bool> card-is-hovered: false;
+    callback execute-script();
+    callback open-output <=> btn-output.clicked;
+    callback open-settings <=> btn-settings.clicked;
+    width: 300px * UAppTheme.scale-factor;
     height: 150px * UAppTheme.scale-factor;
-    UCard {
-        background: root.pressed ? UAppTheme.color-fill-tertiary : UAppTheme.bg-elevated;
-        VerticalLayout {
-            padding: UAppTheme.padding-base;
-            spacing: UAppTheme.spacing-base;
-            Rectangle {
-                horizontal-stretch: 1;
-                clip: true;
-                height: 75px * UAppTheme.scale-factor;
-                VerticalLayout {
-                    alignment: start;
+	// Used to contain the inner card which allow us to apply custom animations
+	// without creating errors when updating the x and y properties in layouts.
+	Rectangle {
+        ButtonInterface {
+            border-radius: UAppTheme.radius-large;
+            border-color: UAppTheme.border;
+            border-width: UAppTheme.border-width-base;
+            background: UAppTheme.bg-container;
+            clicked => {
+                execute-script();
+            }
+            VerticalLayout {
+                padding: UAppTheme.padding-big;
+                HorizontalLayout {
+                    spacing: UAppTheme.spacing-big;
+                    padding-bottom: UAppTheme.padding-base;
+                    VerticalLayout {
+                        alignment: center;
+                        Rectangle {
+                            border-radius: UAppTheme.radius-circle;
+                            background: chip-color;
+                            width: 10px * UAppTheme.scale-factor;
+                            height: 10px * UAppTheme.scale-factor;
+                        }
+                    }
+
                     UTitle {
                         text: name;
-                        color: script-running ? UAppTheme.text-disabled : UAppTheme.text-heading;
                         level: 6;
-                        opacity: root.has-hover ? 0 : 1;
-                        wrap: word-wrap;
-                        horizontal-alignment: center;
-                        animate opacity { duration: 250ms; }
+                        font-weight: 600;
                     }
                 }
 
-                Rectangle {
-                    z: 40;
-                    opacity: root.has-hover ? 1 : 0;
-                    animate opacity { duration: 250ms; }
-                    UCenter {
-                        UTitle {
-                            text: @tr("Run");
-                            level: 6;
-                            opacity: root.has-hover ? 1 : 0;
-                            animate opacity { duration: 250ms; }
+                UText {
+                    vertical-stretch: 1;
+                    text: description;
+                }
+
+                HorizontalLayout {
+                    spacing: UAppTheme.spacing-medium;
+                    btn-exec := UButton {
+                        horizontal-stretch: 1;
+                        variant: primary;
+                        loading: script-running;
+                        text: @tr("Execute");
+                        icon: @image-url("../assets/icons/play.svg");
+                        icon-placement: start;
+                        t-content-spacing: UAppTheme.spacing-big;
+                        clicked => {
+                            execute-script();
                         }
                     }
-                }
 
-                Rectangle {
-                    UCenter {
-                        USpinner {
-                            size: 30px * UAppTheme.scale-factor;
-                            opacity: script-running ? 1 : 0;
-                            animate opacity { duration: 250ms; }
-                        }
+                    btn-output := UIconButton {
+                        t-padding-horizontal: 6px * UAppTheme.scale-factor;
+                        icon: @image-url("../assets/icons/terminal.svg");
+                        border-radius: UAppTheme.radius-base;
+                        accessible-label: @tr("Open script's output.");
+                    }
+
+                    btn-settings := UIconButton {
+                        t-padding-horizontal: 6px * UAppTheme.scale-factor;
+                        icon: @image-url("../assets/icons/settings.svg");
+                        border-radius: UAppTheme.radius-base;
+                        accessible-label: @tr("Open script's settings.");
                     }
                 }
             }
 
-            Rectangle {
-                vertical-stretch: 1;
-            }
-
-            btn-open-output := UIconButton {
-                opacity: root.pressed ? 0 : 1;
-                horizontal-stretch: 1;
-                icon: @image-url("../assets/icons/square-terminal.svg");
-                border-radius: UAppTheme.radius-base;
-                accessible-label: @tr("Open script's output window.");
-                animate opacity { duration: 250ms; }
-            }
-
-            btn-open-settings := UIconButton {
-                opacity: root.pressed ? 0 : 1;
-                horizontal-stretch: 1;
-                icon: @image-url("../assets/icons/settings.svg");
-                border-radius: UAppTheme.radius-base;
-                accessible-label: @tr("Open script's settings.");
-                animate opacity { duration: 250ms; }
-            }
+            animate x, y, drop-shadow-blur { duration: 150ms; }
+            states [
+                hover when self.has-hover || btn-exec.has-hover || btn-output.has-hover || btn-settings.has-hover: {
+                    y: -3px * UAppTheme.scale-factor;
+                    drop-shadow-blur: UAppTheme.shadow-blur;
+                    drop-shadow-color: UAppTheme.shadow-color;
+                    drop-shadow-offset-x: 3px * UAppTheme.scale-factor;
+                    drop-shadow-offset-y: UAppTheme.shadow-y-offset;
+                }
+            ]
         }
-
-        animate background { duration: 250ms; }
-        states [
-            focus when root.has-focus: {
-                border-color: UAppTheme.focus-color;
-                border-width: UAppTheme.focus-border-width;
-            }
-        ]
     }
 }

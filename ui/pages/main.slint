@@ -15,8 +15,8 @@ export global MainPageLogic {
 
 export component MainPage {
     property <length> card-spacing: UAppTheme.padding-big;
-    property <length> card-width: (120px * UAppTheme.scale-factor + card-spacing);
-    property <length> card-height: (150px * UAppTheme.scale-factor + card-spacing);
+    property <length> card-width: (340px * UAppTheme.scale-factor + card-spacing);
+    property <length> card-height: (170px * UAppTheme.scale-factor + card-spacing);
     callback open-script-settings(script: Script, script_index: int);
     vertical-stretch: 1;
     if MainPageLogic.scripts.length != 0: ScrollView {
@@ -30,7 +30,7 @@ export component MainPage {
                     script-running: script.running;
                     x: (mod(idx, columns) * card-width);
                     y: (floor(idx / columns) * card-height);
-                    clicked => {
+                    execute-script => {
                         MainPageLogic.execute-script(idx);
                     }
                     open-output => {
