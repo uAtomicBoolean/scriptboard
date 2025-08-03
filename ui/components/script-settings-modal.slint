@@ -14,6 +14,7 @@ export component ScriptSettingsModal inherits UModal {
     in-out property <int> script_index;
     t-modal-min-width: 500px * UAppTheme.scale-factor;
     t-modal-max-width: 500px * UAppTheme.scale-factor;
+    t-border-radius: UAppTheme.radius-large;
     title: @tr("Settings - ") + script.name;
     accept-btn-text: @tr("Save");
     accept-btn-enabled: name-input.text != "" && interpreter-input.text != "";

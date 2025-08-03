@@ -24,6 +24,7 @@ export component AddScriptModal inherits UModal {
     property <string> script-filename;
     t-modal-min-width: 500px * UAppTheme.scale-factor;
     t-modal-max-width: 500px * UAppTheme.scale-factor;
+    t-border-radius: UAppTheme.radius-large;
     title: @tr("Add a script");
     accept-btn-enabled: name-input.text != "" && script-path != "";
     accepted => {
