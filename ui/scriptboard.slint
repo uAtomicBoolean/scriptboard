@@ -3,7 +3,7 @@ import "assets/fonts/Inter-VariableFont_opsz,wght.ttf";
 
 // UI library
 import { UAppTheme } from "@sleek-ui/app-theme.slint";
-import { UModal } from "@sleek-ui/widgets.slint";
+import { UModal, UDivider } from "@sleek-ui/widgets.slint";
 
 // Components
 import { Header, HeaderStatus } from "components/header.slint";
@@ -35,14 +35,17 @@ export component Scriptboard inherits Window {
     VerticalLayout {
         alignment: stretch;
         Header {
-            height: 40px * UAppTheme.scale-factor;
             vertical-stretch: 0;
             open-add-script-modal => {
                 add-script-modal.show();
             }
         }
 
-        if HeaderStatus.current-page == "main": main-page := MainPage {
+        UDivider {
+            vertical-stretch: 0;
+        }
+
+        if HeaderStatus.current-page == "home": main-page := MainPage {
             open-script-settings(script, script_index) => {
                 script-settings.script = script;
                 script-settings.script_index = script_index;
