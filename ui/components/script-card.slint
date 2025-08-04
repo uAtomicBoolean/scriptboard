@@ -88,7 +88,7 @@ export component ScriptCard {
             states [
                 hover when self.has-hover || btn-exec.has-hover || btn-output.has-hover || btn-settings.has-hover: {
                     y: -3px * UAppTheme.scale-factor;
-                    drop-shadow-blur: UAppTheme.shadow-blur;
+                    drop-shadow-blur: 10px * UAppTheme.scale-factor;
                     drop-shadow-color: UAppTheme.shadow-color;
                     drop-shadow-offset-x: 3px * UAppTheme.scale-factor;
                     drop-shadow-offset-y: UAppTheme.shadow-y-offset;
