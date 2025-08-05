@@ -19,6 +19,8 @@ export component Header inherits Rectangle {
     callback open-add-script-modal <=> add-script-btn.clicked;
     height: 50px * UAppTheme.scale-factor;
     background: UAppTheme.bg-container;
+    drop-shadow-color: UAppTheme.shadow-color;
+    drop-shadow-blur: 8px * UAppTheme.scale-factor;
     HorizontalLayout {
         alignment: space-between;
         padding: UAppTheme.padding-big;
@@ -68,7 +70,7 @@ export component Header inherits Rectangle {
 
     Rectangle {
         x: current-link-x + UAppTheme.padding-big;
-        y: 42px;
+        y: 42px * UAppTheme.scale-factor;
         height: 2px;
         background: UAppTheme.primary;
         width: current-link-width;
