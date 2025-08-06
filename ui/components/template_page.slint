@@ -7,14 +7,15 @@ export component TemplatePage {
     vertical-stretch: 1;
     ScrollView {
         VerticalLayout {
-            padding: UAppTheme.padding-big;
+            padding: 24px * UAppTheme.scale-factor;
             HorizontalLayout {
                 alignment: center;
                 UCard {
                     width: 600px * UAppTheme.scale-factor;
                     t-border-radius: UAppTheme.radius-large;
+                    t-drop-shadow-blur: 10px * UAppTheme.scale-factor;
                     VerticalLayout {
-                        padding: UAppTheme.padding-big;
+                        padding: 24px * UAppTheme.scale-factor;
                         spacing: UAppTheme.spacing-big;
                         vertical-stretch: 1;
                         @children

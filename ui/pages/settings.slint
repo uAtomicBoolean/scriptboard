@@ -3,6 +3,7 @@ import { UButton, UCenter, UInput, USelect, USwitch, UText, UTitle } from "@slee
 import { USelectOption } from "@sleek-ui/utils/structs.slint";
 
 import { TemplatePage } from "../components/template_page.slint";
+import { SettingLine } from "../components/setting-line.slint";
 import { ComboBox } from "std-widgets.slint";
 
 
@@ -21,23 +22,14 @@ export component SettingsPage inherits TemplatePage {
         alignment: start;
         UTitle {
             text: @tr("General");
-            level: 6;
+            level: 5;
             font-weight: 600;
         }
     }
 
-    HorizontalLayout {
-        VerticalLayout {
-            alignment: center;
-            UText {
-                text: @tr("Zoom");
-            }
-        }
-
-        Rectangle {
-            horizontal-stretch: 1;
-        }
-
+    SettingLine {
+        name: @tr("Zoom");
+        description: @tr("Manage the zoom of the window.");
         scale-factor-select := USelect {
             property <[USelectOption]> options-data: [
                 { text: SettingsTR.get-scale-factor-string(0.5), value: "0.5", enabled: true },
@@ -59,18 +51,9 @@ export component SettingsPage inherits TemplatePage {
         }
     }
 
-    HorizontalLayout {
-        VerticalLayout {
-            alignment: center;
-            UText {
-                text: @tr("Language");
-            }
-        }
-
-        Rectangle {
-            horizontal-stretch: 1;
-        }
-
+    SettingLine {
+        name: @tr("Language");
+        description: @tr("Change the language of the application.");
         language-select := USelect {
             property <[USelectOption]> options-data: [
                 { text: SettingsTR.get-language-string("en_GB"), value: "en_GB", enabled: true },
@@ -87,45 +70,30 @@ export component SettingsPage inherits TemplatePage {
 
     HorizontalLayout {
         alignment: start;
-        padding-top: UAppTheme.padding-bigger;
+        padding-top: 24px * UAppTheme.scale-factor;
         UTitle {
             text: @tr("Scripts");
-            level: 6;
+            level: 5;
             font-weight: 600;
         }
     }
 
-    HorizontalLayout {
-        spacing: UAppTheme.spacing-base;
-        VerticalLayout {
-            alignment: center;
-            UText {
-                text: @tr("Enable notification auto-close");
-            }
-        }
-
-        VerticalLayout {
-            alignment: center;
-            enable-timeout := USwitch {
-                checked: SettingsPageLogic.get-timeout-enabled();
-                changed checked => {
-                    settings-modified = true;
-                }
+    SettingLine {
+        name: @tr("Auto-close notification");
+        description: @tr("If enabled, the notifications will automatically close after a specified delay.");
+        enable-timeout := USwitch {
+            checked: SettingsPageLogic.get-timeout-enabled();
+            changed checked => {
+                settings-modified = true;
             }
         }
     }
 
-    HorizontalLayout {
-        spacing: UAppTheme.spacing-base;
-        VerticalLayout {
-            alignment: center;
-            UText {
-                text: @tr("Auto-close delay (seconds)");
-            }
-        }
-
+    SettingLine {
+        name: @tr("Auto-close delay");
+        description: @tr("The delay before notification are automatically closed.");
         notif-timeout-input := UInput {
-            width: 70px * UAppTheme.scale-factor;
+            width: 150px * UAppTheme.scale-factor;
             text: SettingsPageLogic.get-notif-timeout();
             input-type: number;
             enabled: enable-timeout.checked;
@@ -135,19 +103,11 @@ export component SettingsPage inherits TemplatePage {
         }
     }
 
-    HorizontalLayout {
-        VerticalLayout {
-            alignment: center;
-            UText {
-                text: @tr("Default interpreter");
-            }
-        }
-
-        Rectangle {
-            horizontal-stretch: 1;
-        }
-
+    SettingLine {
+        name: @tr("Default interpreter");
+        description: @tr("This is the interpreter that is selected by default when adding a script.");
         default-interpreter-input := UInput {
+            width: 150px * UAppTheme.scale-factor;
             text: SettingsPageLogic.get-default-interpreter();
             edited => {
                 settings-modified = true;

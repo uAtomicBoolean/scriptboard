@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2025-07-31 22:27+0000\n"
-"PO-Revision-Date: 2025-08-01 00:41+0200\n"
+"POT-Creation-Date: 2025-08-06 10:50+0000\n"
+"PO-Revision-Date: 2025-08-06 12:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -10,293 +10,333 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 2.4.2\n"
 
-#: ui\components\add-script-modal.slint:27
-msgctxt "AddScriptModal"
-msgid "Add a script"
-msgstr "Add a script"
-
-#: ui\components\add-script-modal.slint:56
-msgctxt "AddScriptModal"
-msgid "Script name:"
-msgstr "Script name:"
-
-#: ui\components\add-script-modal.slint:62
-msgctxt "AddScriptModal"
-msgid "Sync folder"
-msgstr "Sync folder"
-
-#: ui\components\add-script-modal.slint:70
-msgctxt "AddScriptModal"
-msgid "Script file:"
-msgstr "Script file:"
-
-#: ui\components\add-script-modal.slint:93
-msgctxt "AddScriptModal"
-msgid "Select a file"
-msgstr "Select a file"
-
-#: ui\components\add-script-modal.slint:105
-msgctxt "AddScriptModal"
-msgid "Interpreter:"
-msgstr "Interpreter:"
-
-#: ui\components\add-script-modal.slint:118
-msgctxt "AddScriptModal"
-msgid "Arguments:"
-msgstr "Arguments:"
-
-#: ui\components\add-script-modal.slint:131
-msgctxt "AddScriptModal"
-msgid "Administrator:"
-msgstr "Administrator:"
-
-#: ui\components\add-script-modal.slint:150
-msgctxt "AddScriptModal"
-msgid "Notifications:"
-msgstr "Notifications:"
-
-#: ui\components\header.slint:26
-msgctxt "Header"
-msgid "Home"
-msgstr "Home"
-
-#: ui\components\header.slint:40
-msgctxt "Header"
-msgid "Settings"
-msgstr "Settings"
-
-#: ui\components\header.slint:54
-msgctxt "Header"
-msgid "About"
-msgstr "About"
-
-#: ui\components\header.slint:68
-msgctxt "Header"
-msgid "Add a script"
-msgstr "Add a script"
-
-#: ui\components\notifications-overlay.slint:51
+#: ui/components/notifications-overlay.slint:51
 msgctxt "NotifsOverlayLogic"
 msgid "Couldn't start the script"
 msgstr "Couldn't start the script"
 
-#: ui\components\notifications-overlay.slint:54
+#: ui/components/notifications-overlay.slint:54
 msgctxt "NotifsOverlayLogic"
 msgid "No output for the script"
 msgstr "No output for the script"
 
-#: ui\components\notifications-overlay.slint:57
-#| msgctxt "NotifsOverlayLogic"
-#| msgid "Please check the logs for more information."
+#: ui/components/notifications-overlay.slint:57
 msgctxt "NotifsOverlayLogic"
 msgid "Please check the logs."
 msgstr "Please check the logs."
 
-#: ui\components\notifications-overlay.slint:60
-#| msgctxt "NotifsOverlayLogic"
-#| msgid "Script execution failed."
+#: ui/components/notifications-overlay.slint:60
 msgctxt "NotifsOverlayLogic"
 msgid "Script execution cancelled."
 msgstr "Script execution cancelled."
 
-#: ui\components\notifications-overlay.slint:63
+#: ui/components/notifications-overlay.slint:63
 msgctxt "NotifsOverlayLogic"
 msgid "Script execution done."
 msgstr "Script execution done."
 
-#: ui\components\notifications-overlay.slint:66
+#: ui/components/notifications-overlay.slint:66
 msgctxt "NotifsOverlayLogic"
 msgid "Script execution failed."
 msgstr "Script execution failed."
 
-#: ui\components\notifications-overlay.slint:69
+#: ui/components/notifications-overlay.slint:69
 msgctxt "NotifsOverlayLogic"
 msgid "Could not open output window"
 msgstr "Could not open output window"
 
-#: ui\components\notifications-overlay.slint:72
+#: ui/components/notifications-overlay.slint:72
 msgctxt "NotifsOverlayLogic"
 msgid "Please check the logs for more information."
 msgstr "Please check the logs for more information."
 
-#: ui\components\notifications-overlay.slint:74
+#: ui/components/notifications-overlay.slint:74
 msgctxt "NotifsOverlayLogic"
 msgid "Unknown"
 msgstr "Unknown"
 
-#: ui\components\script-card.slint:42
-msgctxt "ScriptCard"
-msgid "Run"
-msgstr "Run"
+#: ui/components/add-script-modal.slint:28
+msgctxt "AddScriptModal"
+msgid "Add a script"
+msgstr "Add a script"
 
-#: ui\components\script-card.slint:70
-msgctxt "ScriptCard"
-msgid "Open script's output window."
-msgstr "Open script's output window."
+#: ui/components/add-script-modal.slint:57
+msgctxt "AddScriptModal"
+msgid "Script name:"
+msgstr "Script name:"
 
-#: ui\components\script-card.slint:79
-msgctxt "ScriptCard"
-msgid "Open script's settings."
-msgstr "Open script's settings."
+#: ui/components/add-script-modal.slint:63
+msgctxt "AddScriptModal"
+msgid "Sync folder"
+msgstr "Sync folder"
 
-#: ui\components\script-settings-modal.slint:17
+#: ui/components/add-script-modal.slint:71
+msgctxt "AddScriptModal"
+msgid "Script file:"
+msgstr "Script file:"
+
+#: ui/components/add-script-modal.slint:94
+msgctxt "AddScriptModal"
+msgid "Select a file"
+msgstr "Select a file"
+
+#: ui/components/add-script-modal.slint:106
+msgctxt "AddScriptModal"
+msgid "Interpreter:"
+msgstr "Interpreter:"
+
+#: ui/components/add-script-modal.slint:119
+msgctxt "AddScriptModal"
+msgid "Arguments:"
+msgstr "Arguments:"
+
+#: ui/components/add-script-modal.slint:132
+msgctxt "AddScriptModal"
+msgid "Administrator:"
+msgstr "Administrator:"
+
+#: ui/components/add-script-modal.slint:151
+msgctxt "AddScriptModal"
+msgid "Notifications:"
+msgstr "Notifications:"
+
+#: ui/components/script-settings-modal.slint:18
 msgctxt "ScriptSettingsModal"
 msgid "Settings - "
 msgstr "Settings - "
 
-#: ui\components\script-settings-modal.slint:18
+#: ui/components/script-settings-modal.slint:19
 msgctxt "ScriptSettingsModal"
 msgid "Save"
 msgstr "Save"
 
-#: ui\components\script-settings-modal.slint:37
+#: ui/components/script-settings-modal.slint:38
 msgctxt "ScriptSettingsModal"
 msgid "Name:"
 msgstr "Name:"
 
-#: ui\components\script-settings-modal.slint:51
+#: ui/components/script-settings-modal.slint:52
 msgctxt "ScriptSettingsModal"
 msgid "Interpreter:"
 msgstr "Interpreter:"
 
-#: ui\components\script-settings-modal.slint:65
+#: ui/components/script-settings-modal.slint:66
 msgctxt "ScriptSettingsModal"
 msgid "Arguments:"
 msgstr "Arguments:"
 
-#: ui\components\script-settings-modal.slint:79
+#: ui/components/script-settings-modal.slint:80
 msgctxt "ScriptSettingsModal"
 msgid "Administrator:"
 msgstr "Administrator:"
 
-#: ui\components\script-settings-modal.slint:99
+#: ui/components/script-settings-modal.slint:100
 msgctxt "ScriptSettingsModal"
 msgid "Notifications:"
 msgstr "Notifications:"
 
-#: ui\components\script-settings-modal.slint:119
+#: ui/components/script-settings-modal.slint:120
 msgctxt "ScriptSettingsModal"
 msgid "Delete"
 msgstr "Delete"
 
-#: ui\components\script-settings-modal.slint:120
+#: ui/components/script-settings-modal.slint:121
 msgctxt "ScriptSettingsModal"
 msgid "Delete the script."
 msgstr "Delete the script."
 
-#: ui\pages\main.slint:50
+#: ui/components/header.slint:13
+msgctxt "Header"
+msgid "Home"
+msgstr "Home"
+
+#: ui/components/header.slint:14
+msgctxt "Header"
+msgid "Settings"
+msgstr "Settings"
+
+#: ui/components/header.slint:15
+msgctxt "Header"
+msgid "About"
+msgstr "About"
+
+#: ui/components/header.slint:63
+msgctxt "Header"
+msgid "Add a script"
+msgstr "Add a script"
+
+#: ui/components/script-card.slint:62
+msgctxt "ScriptCard"
+msgid "Execute"
+msgstr "Execute"
+
+#: ui/components/script-card.slint:75
+msgctxt "ScriptCard"
+msgid "Open script's output."
+msgstr "Open script's output."
+
+#: ui/components/script-card.slint:82
+msgctxt "ScriptCard"
+msgid "Open script's settings."
+msgstr "Open script's settings."
+
+#: ui/pages/main.slint:48
 msgctxt "MainPage"
 msgid "Add a script to start using this software."
 msgstr "Add a script to start using this software."
 
-#: ui\pages\settings.slint:23
+#: ui/pages/settings.slint:24
 msgctxt "SettingsPage"
 msgid "General"
 msgstr "General"
 
-#: ui\pages\settings.slint:33
+#: ui/pages/settings.slint:31
 msgctxt "SettingsPage"
 msgid "Zoom"
 msgstr "Zoom"
 
-#: ui\pages\settings.slint:66
+#: ui/pages/settings.slint:32
+msgctxt "SettingsPage"
+msgid "Manage the zoom of the window."
+msgstr "Manage the zoom of the window."
+
+#: ui/pages/settings.slint:55
 msgctxt "SettingsPage"
 msgid "Language"
 msgstr "Language"
 
-#: ui\pages\settings.slint:92
+#: ui/pages/settings.slint:56
+msgctxt "SettingsPage"
+msgid "Change the language of the application."
+msgstr "Change the language of the application."
+
+#: ui/pages/settings.slint:75
 msgctxt "SettingsPage"
 msgid "Scripts"
 msgstr "Scripts"
 
-#: ui\pages\settings.slint:103
+#: ui/pages/settings.slint:82
 msgctxt "SettingsPage"
-msgid "Enable notification auto-close"
-msgstr "Enable notification auto-close"
+msgid "Auto-close notification"
+msgstr "Auto-close notification"
 
-#: ui\pages\settings.slint:123
+#: ui/pages/settings.slint:83
 msgctxt "SettingsPage"
-msgid "Auto-close delay (seconds)"
-msgstr "Auto-close delay (seconds)"
+msgid ""
+"If enabled, the notifications will automatically close after a specified "
+"delay."
+msgstr ""
+"If enabled, the notifications will automatically close after a specified "
+"delay."
 
-#: ui\pages\settings.slint:142
+#: ui/pages/settings.slint:93
+#| msgctxt "SettingsPage"
+#| msgid "Auto-close delay (seconds)"
+msgctxt "SettingsPage"
+msgid "Auto-close delay"
+msgstr "Auto-close delay"
+
+#: ui/pages/settings.slint:94
+#| msgctxt "SettingsPage"
+#| msgid "Enable notification auto-close"
+msgctxt "SettingsPage"
+msgid "The delay before notification are automatically closed."
+msgstr "The delay before notification are automatically closed."
+
+#: ui/pages/settings.slint:107
 msgctxt "SettingsPage"
 msgid "Default interpreter"
 msgstr "Default interpreter"
 
-#: ui\pages\settings.slint:164
+#: ui/pages/settings.slint:108
+msgctxt "SettingsPage"
+msgid ""
+"This is the interpreter that is selected by default when adding a script."
+msgstr ""
+"This is the interpreter that is selected by default when adding a script."
+
+#: ui/pages/settings.slint:124
 msgctxt "SettingsPage"
 msgid "Save"
 msgstr "Save"
 
-#: ui\pages\settings.slint:184
+#: ui/pages/settings.slint:144
 msgctxt "SettingsTR"
 msgid "50%"
 msgstr "50%"
 
-#: ui\pages\settings.slint:187
+#: ui/pages/settings.slint:147
 msgctxt "SettingsTR"
 msgid "75%"
 msgstr "75%"
 
-#: ui\pages\settings.slint:190
+#: ui/pages/settings.slint:150
 msgctxt "SettingsTR"
 msgid "90%"
 msgstr "90%"
 
-#: ui\pages\settings.slint:193
+#: ui/pages/settings.slint:153
 msgctxt "SettingsTR"
 msgid "100%"
 msgstr "100%"
 
-#: ui\pages\settings.slint:196
+#: ui/pages/settings.slint:156
 msgctxt "SettingsTR"
 msgid "110%"
 msgstr "110%"
 
-#: ui\pages\settings.slint:199
+#: ui/pages/settings.slint:159
 msgctxt "SettingsTR"
 msgid "125%"
 msgstr "125%"
 
-#: ui\pages\settings.slint:202
+#: ui/pages/settings.slint:162
 msgctxt "SettingsTR"
 msgid "150%"
 msgstr "150%"
 
-#: ui\pages\settings.slint:205
+#: ui/pages/settings.slint:165
 msgctxt "SettingsTR"
 msgid "175%"
 msgstr "175%"
 
-#: ui\pages\settings.slint:208
+#: ui/pages/settings.slint:168
 msgctxt "SettingsTR"
 msgid "200%"
 msgstr "200%"
 
-#: ui\pages\settings.slint:210 ui\pages\settings.slint:219
+#: ui/pages/settings.slint:170 ui/pages/settings.slint:179
 msgctxt "SettingsTR"
 msgid "Unknown"
 msgstr "Unknown"
 
-#: ui\pages\settings.slint:214
+#: ui/pages/settings.slint:174
 msgctxt "SettingsTR"
 msgid "English"
 msgstr "English"
 
-#: ui\pages\settings.slint:217
+#: ui/pages/settings.slint:177
 msgctxt "SettingsTR"
 msgid "French"
 msgstr "French"
 
-#: ui\windows\script_output_window.slint:17
+#: ui/windows/script_output_window.slint:18
 msgctxt "ScriptOutputWindow"
 msgid "Output - "
 msgstr "Output - "
 
-#: ui\windows\script_output_window.slint:34
+#: ui/windows/script_output_window.slint:35
+msgctxt "ScriptOutputWindow"
+msgid "Preserve output"
+msgstr "Preserve output"
+
+#: ui/windows/script_output_window.slint:48
 msgctxt "ScriptOutputWindow"
 msgid "Restart"
 msgstr "Restart"
+
+#~ msgctxt "ScriptCard"
+#~ msgid "Run"
+#~ msgstr "Run"

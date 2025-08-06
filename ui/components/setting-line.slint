@@ -1,0 +1,33 @@
+import { UAppTheme } from "@sleek-ui/app-theme.slint";
+import { UText } from "@sleek-ui/widgets.slint";
+
+
+export component SettingLine inherits Rectangle {
+    in-out property <string> name;
+    in-out property <string> description;
+    HorizontalLayout {
+        alignment: space-between;
+        padding-top: UAppTheme.padding-base;
+        VerticalLayout {
+            horizontal-stretch: 1;
+            spacing: UAppTheme.spacing-base;
+            UText {
+                font-weight: 600;
+                text: name;
+            }
+
+            UText {
+                max-width: 350px * UAppTheme.scale-factor;
+                font-size: 13px * UAppTheme.scale-factor;
+                text: description;
+                color: UAppTheme.text-secondary;
+                wrap: word-wrap;
+            }
+        }
+
+        VerticalLayout {
+            alignment: center;
+            @children
+        }
+    }
+}
